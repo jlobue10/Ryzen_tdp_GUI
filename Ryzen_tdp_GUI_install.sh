@@ -65,8 +65,8 @@ cat > $HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI.desktop <<EOF
 Categories=System;
 Comment=Ryzen tdp GUI
 Exec=$HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI
-GenericName=rEFInd GUI
-Name=rEFInd GUI
+GenericName=Ryzen tdp GUI
+Name=Ryzent tdp GUI
 Path=$HOME/.local/Ryzen_tdp_GUI/GUI
 Icon=$HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI_icon.png
 StartupNotify=true
