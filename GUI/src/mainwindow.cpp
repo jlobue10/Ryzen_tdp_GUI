@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <QDebug>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -59,6 +58,7 @@ string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
+string Update_Num_str;
 string user_home_path_str;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -112,9 +112,6 @@ void MainWindow::on_GPU_Clock_Slider_valueChanged(int value)
 void MainWindow::on_tdp_Apply_pushButton_clicked()
 {
     tdp_value_int = ui->tdp_Slider->value();
-    //tdp_value_str = tdp_value.toStdString();
-    //qDebug() << tdp_value;
-    //tdp_value_int = stoi(tdp_value_str);
     Boost_bool = ui->Boost_checkBox->isChecked();
     Ryzen_tdp_command_str.clear();
     Ryzen_tdp_command_str.append("sudo ryzenadj");
@@ -437,7 +434,6 @@ void MainWindow::on_GPU_Apply_pushButton_clicked()
     if (GPU_Clock_bool){
         gpu_clock_value = ui->GPU_Clock_lineEdit->text();
         if(gpu_clock_value == ""){
-            //Unset in LineEdit box
             GPU_Clock_value_int = ui->GPU_Clock_Slider->value();
         }else {
             GPU_Clock_value_int = gpu_clock_value.toInt(&ok);
@@ -503,8 +499,6 @@ void MainWindow::on_GPU_Clock_lineEdit_editingFinished()
 void MainWindow::Ryzen_tdp_command(string Ryzen_command)
 {
     system(Ryzen_command.c_str());
-    Ryzen_tdp_debug_out = QString::fromStdString(Ryzen_command);
-    qDebug() << Ryzen_tdp_debug_out;
 }
 
 void MainWindow::readSettings()
@@ -547,4 +541,45 @@ void MainWindow::writeSettings()
     settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
     settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
     settings.endGroup();
+}
+
+void MainWindow::on_About_pushButton_clicked()
+{
+    QMessageBox AboutBox;
+    QPushButton* updateButton = new QPushButton("Check For Update");
+    connect(updateButton, &QPushButton::clicked, this, &MainWindow::on_updateButton_Clicked);
+    AboutBox.setTextFormat(Qt::RichText);
+    AboutBox.setText("<p align='center'>Ryzen tdp GUI v1.0.0<br><br>"
+                     "Original GUI Creator: "
+                     "<a href='https://github.com/jlobue10'>jlobue10</a><br><br>"
+                     "Special Thanks to Nobara Discord for testing and QA");
+    AboutBox.setStandardButtons(QMessageBox::Ok);
+    AboutBox.addButton(updateButton, QMessageBox::ActionRole);
+    AboutBox.exec();
+}
+
+void MainWindow::on_updateButton_Clicked()
+{
+    QMessageBox UpdateBox;
+    UpdateBox.setTextFormat(Qt::RichText);
+    FILE *Update_process;
+    char Update_buff[1024];
+    Update_Num_str.clear();
+    Update_process = popen("echo $(curl https://raw.githubusercontent.com/jlobue10/Ryzen_tdp/main/VERSION) | sed 's/\\./ /g' | sed 's/\\s\\+//g'", "r");
+    if (Update_process != NULL) {
+        while (fgets(Update_buff, sizeof(Update_buff), Update_process)) {
+            printf("%s", Update_buff);
+            Update_Num_str += Update_buff;
+        }
+        pclose(Update_process);
+    }
+    Update_Num = stoi(Update_Num_str);
+    if(Update_Num > VERSION) {
+        UpdateBox.setText("<p align='center'>An update is available "
+                          "<a href='https://github.com/jlobue10/Ryzen_tdp/releases'>here</a><br><br></p>");
+    } else {
+        UpdateBox.setText("<p align='center'>No update found. You are using the latest version.<br><br></p>");
+    }
+    UpdateBox.setStandardButtons(QMessageBox::Ok);
+    UpdateBox.exec();
 }
