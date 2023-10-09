@@ -12,4 +12,4 @@ cd Ryzen_tdp
 chmod +x Ryzen_tdp_GUI_install.sh
 ./Ryzen_tdp_GUI_install.sh
 ```
-![Screenshot_20231009_031825](https://github.com/jlobue10/Ryzen_tdp_GUI/assets/9971433/e1a1a378-179c-4d90-882a-6e050bc996e3)
+![Screenshot_20231009_033119](https://github.com/jlobue10/Ryzen_tdp_GUI/assets/9971433/c31449d5-8181-40c6-8e1c-81ad4083d7ab)
