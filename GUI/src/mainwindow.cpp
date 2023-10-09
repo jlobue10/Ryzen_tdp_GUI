@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <cmath>
-#include <iostream>
-#include <fstream>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -14,10 +12,6 @@
 #include <string>
 #include <unistd.h>
 
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::ofstream;
 using std::ostringstream;
 using std::round;
 using std::stoi;
@@ -563,7 +557,7 @@ void MainWindow::on_updateButton_Clicked()
     FILE *Update_process;
     char Update_buff[1024];
     Update_Num_str.clear();
-    Update_process = popen("echo $(curl https://raw.githubusercontent.com/jlobue10/Ryzen_tdp/main/VERSION) | sed 's/\\./ /g' | sed 's/\\s\\+//g'", "r");
+    Update_process = popen("echo $(curl https://raw.githubusercontent.com/jlobue10/Ryzen_tdp_GUI/main/VERSION) | sed 's/\\./ /g' | sed 's/\\s\\+//g'", "r");
     if (Update_process != NULL) {
         while (fgets(Update_buff, sizeof(Update_buff), Update_process)) {
             printf("%s", Update_buff);
