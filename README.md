@@ -8,7 +8,7 @@ This GUI needs [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) installed to work
 ## Install Procedure
 ```
 git clone https://github.com/jlobue10/Ryzen_tdp_GUI
-cd Ryzen_tdp
+cd Ryzen_tdp_GUI
 chmod +x Ryzen_tdp_GUI_install.sh
 ./Ryzen_tdp_GUI_install.sh
 ```
