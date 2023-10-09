@@ -93,14 +93,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_tdp_Slider_valueChanged(int value)
 {
     tdp_value_str = to_string(value);
     tdp_value = QString::fromStdString(tdp_value_str);
     ui->tdp_lineEdit->setText(tdp_value);
 }
-
 
 void MainWindow::on_GPU_Clock_Slider_valueChanged(int value)
 {
