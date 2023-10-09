@@ -2,11 +2,8 @@
 Ryzen tdp GUI  (ROG ALLY)
 
 ```
-git clone https://github.com/jlobue10/Ryzen_tdp
-cd Ryzen_tdp/GUI/src
-mkdir -p build && cd build
-cmake ..
-make
+git clone https://github.com/jlobue10/Ryzen_tdp_GUI
+cd Ryzen_tdp
+chmod +x Ryzen_tdp_GUI_install.sh
+./Ryzen_tdp_GUI_install.sh
 ```
-
-From build dir, run `./Ryzen_tdp_GUI` to launch the GUI.
