@@ -1,7 +1,7 @@
 # Ryzen_tdp
 Ryzen tdp GUI  (ROG ALLY)
 
-##Pre-requisites
+## Pre-requisites
 
 This GUI needs [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) installed to work.
 
