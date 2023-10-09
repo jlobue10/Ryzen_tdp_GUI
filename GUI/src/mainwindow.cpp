@@ -516,6 +516,7 @@ void MainWindow::readSettings()
     ui->tdp_lineEdit->setText(tempTDP_Slider);
     ui->tdp_Slider->setValue(tempTDP_Slider.toInt(&ok));
     ui->GPU_Clock_Slider->setValue(tempGPU_Slider.toInt(&ok));
+    ui->GPU_Clock_lineEdit->setText(tempGPU_Slider);
 }
 
 void MainWindow::writeSettings()
