@@ -39,7 +39,7 @@ int VERSION = 100;
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
-QString settings_path_suffix{"/.local/Ryzen_tdp/Ryzen_tdp.ini"};
+QString settings_path_suffix{"/.local/Ryzen_tdp_GUI/Ryzen_tdp_GUI.ini"};
 QString fast_boost_value = "53000";  // mW
 QString fast_boost_value_display = "53";
 QString slow_boost_value = "44000";  // mW
