@@ -9,4 +9,4 @@ cmake ..
 make
 ```
 
-From build dir, run `./RyzenZ1E_tdp` to launch the GUI. May change this name later. Initial test build is up for sharing and testing.
+From build dir, run `./Ryzen_tdp_GUI` to launch the GUI.
