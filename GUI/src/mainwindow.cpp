@@ -48,6 +48,7 @@ QString Ryzen_tdp_debug_out;
 string gpu_clock_value_str;
 string slow_boost_str;
 string fast_boost_str;
+string ryzenadj_info = "xterm -e \"sudo ryzenadj --info; $SHELL\"";
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string tdp_USER = getlogin();
@@ -487,6 +488,12 @@ void MainWindow::on_GPU_Clock_lineEdit_editingFinished()
         ui->GPU_Clock_Slider->setValue(gpu_clock_value.toInt(&ok));
     }
 }
+
+void MainWindow::on_tdp_info_pushButton_clicked()
+{
+    system(ryzenadj_info.c_str());
+}
+
 
 void MainWindow::Ryzen_tdp_command(string Ryzen_command)
 {
