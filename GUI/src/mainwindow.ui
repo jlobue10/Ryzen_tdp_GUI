@@ -17,8 +17,8 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>11</x>
-      <y>11</y>
+      <x>10</x>
+      <y>10</y>
       <width>581</width>
       <height>251</height>
      </rect>
@@ -54,58 +54,6 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="slow_label">
-         <property name="toolTip">
-          <string>Slow Boost override</string>
-         </property>
-         <property name="text">
-          <string>Slow</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="slow_tdp_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Slow Boost override</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="slow_tdp_label">
-         <property name="maximumSize">
-          <size>
-           <width>41</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Watts</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
       <widget class="QLabel" name="APU_tdp_label">
        <property name="text">
@@ -113,56 +61,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item alignment="Qt::AlignRight">
-        <widget class="QLabel" name="fast_label">
-         <property name="toolTip">
-          <string>Fast Boost override</string>
-         </property>
-         <property name="text">
-          <string>Fast</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="fast_tdp_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Fast Boost override</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="fast_tdp_label">
-         <property name="maximumSize">
-          <size>
-           <width>41</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Watts</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0" colspan="2">
+     <item row="2" column="0" colspan="3">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QSlider" name="tdp_Slider">
@@ -249,7 +148,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1" alignment="Qt::AlignRight">
+     <item row="3" column="2">
       <widget class="QPushButton" name="tdp_info_pushButton">
        <property name="maximumSize">
         <size>
@@ -282,7 +181,20 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0" colspan="2">
+     <item row="4" column="2">
+      <widget class="QPushButton" name="exit_pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Exit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="3">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QSlider" name="GPU_Clock_Slider">
@@ -354,6 +266,107 @@
          </property>
          <property name="text">
           <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="slow_label">
+         <property name="toolTip">
+          <string>Slow Boost override</string>
+         </property>
+         <property name="text">
+          <string>Slow</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="slow_tdp_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Slow Boost override</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="slow_tdp_label">
+         <property name="maximumSize">
+          <size>
+           <width>41</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Watts</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item alignment="Qt::AlignRight">
+        <widget class="QLabel" name="fast_label">
+         <property name="toolTip">
+          <string>Fast Boost override</string>
+         </property>
+         <property name="text">
+          <string>Fast</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="fast_tdp_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Fast Boost override</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="fast_tdp_label">
+         <property name="maximumSize">
+          <size>
+           <width>41</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Watts</string>
          </property>
         </widget>
        </item>
