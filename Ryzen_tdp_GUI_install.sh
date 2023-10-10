@@ -56,7 +56,7 @@ if [ ! -f $HOME/.local/Ryzen_tdp_GUI/GUI/src/build/Ryzen_tdp_GUI ]; then
 	exit 1
 fi
 
-# Move compiled rEFInd_GUI binary into GUI folder
+# Move compiled Ryzen_tdp_GUI binary into GUI folder
 cp Ryzen_tdp_GUI ../../ 2>/dev/null
 
 #Create .desktop icon entry. Needs cat with generic username
