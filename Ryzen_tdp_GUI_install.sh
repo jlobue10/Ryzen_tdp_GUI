@@ -26,7 +26,7 @@ NOBARA=$?
 
 if [ $FEDORA_BASE == 0 ]; then
 	echo -e '\nFedora based installation starting.\n'
-		sudo dnf install qt5-linguist
+		sudo dnf install cmake gcc-c++ qt6-qtbase-devel qt6-qttools-devel qt5-qtbase-devel qt5-qttools-devel qt5-linguist
 fi
 
 which apt 2>/dev/null
