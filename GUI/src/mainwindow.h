@@ -16,6 +16,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void Ryzen_tdp_command(string Ryzen_command);
+    string Get_tdp_Info();
 
 private slots:
     void on_tdp_Slider_valueChanged(int value);
@@ -40,7 +42,7 @@ private slots:
 
     void on_tdp_info_pushButton_clicked();
 
-    void Ryzen_tdp_command(string Ryzen_command);
+    void on_exit_pushButton_clicked();
 
     void on_About_pushButton_clicked();
 
