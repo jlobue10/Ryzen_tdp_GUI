@@ -48,7 +48,7 @@ QString Ryzen_tdp_debug_out;
 string gpu_clock_value_str;
 string slow_boost_str;
 string fast_boost_str;
-string ryzenadj_info = "xterm -e \"sudo ryzenadj --info; $SHELL\"";
+string ryzenadj_info = "xterm -e \"sudo ryzenadj --info | grep -e 'STAPM' -e 'PPT .* FAST' -e 'PPT .* SLOW'; $SHELL\"";
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string tdp_USER = getlogin();
