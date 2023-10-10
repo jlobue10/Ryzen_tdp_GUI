@@ -38,6 +38,8 @@ private slots:
 
     void writeSettings();
 
+    void on_tdp_info_pushButton_clicked();
+
     void Ryzen_tdp_command(string Ryzen_command);
 
     void on_About_pushButton_clicked();
