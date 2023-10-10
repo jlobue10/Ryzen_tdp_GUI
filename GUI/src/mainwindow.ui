@@ -17,8 +17,8 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>11</x>
+      <y>11</y>
       <width>581</width>
       <height>251</height>
      </rect>
@@ -249,10 +249,36 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="1" alignment="Qt::AlignRight">
+      <widget class="QPushButton" name="tdp_info_pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>62</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>TDP info</string>
+       </property>
+      </widget>
+     </item>
      <item row="4" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
       <widget class="QLabel" name="GPU_Clock_Manual_label">
        <property name="text">
         <string>GPU Clock Manual Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1" alignment="Qt::AlignRight">
+      <widget class="QPushButton" name="About_pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>About</string>
        </property>
       </widget>
      </item>
@@ -332,19 +358,6 @@
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="4" column="1" alignment="Qt::AlignRight">
-      <widget class="QPushButton" name="About_pushButton">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>29</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>About</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </widget>
