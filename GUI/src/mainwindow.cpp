@@ -48,9 +48,9 @@ QString Ryzen_tdp_debug_out;
 string gpu_clock_value_str;
 string slow_boost_str;
 string fast_boost_str;
-string ryzenadj_info = "xterm -e \"sudo ryzenadj --info | grep -e 'STAPM' -e 'PPT .* FAST' -e 'PPT .* SLOW'; $SHELL\"";
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
+string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
 string Update_Num_str;
@@ -491,9 +491,34 @@ void MainWindow::on_GPU_Clock_lineEdit_editingFinished()
 
 void MainWindow::on_tdp_info_pushButton_clicked()
 {
-    system(ryzenadj_info.c_str());
+    QMessageBox tdp_info_Box;
+    string tdp_info_disp = Get_tdp_Info();
+    QString tdp_info_QString = QString::fromStdString(tdp_info_disp);
+    tdp_info_Box.setTextFormat(Qt::RichText);
+    tdp_info_Box.setText(tdp_info_QString);
+    tdp_info_Box.setStandardButtons(QMessageBox::Ok);
+    tdp_info_Box.exec();
 }
 
+void MainWindow::on_exit_pushButton_clicked()
+{
+    MainWindow::~MainWindow();
+}
+
+string MainWindow::Get_tdp_Info() {
+    tdp_info_str.clear();
+    FILE *process;
+    char buff[1024];
+    process = popen("sudo ryzenadj --info | grep -e 'STAPM' -e 'PPT .* FAST' -e 'PPT .* SLOW'", "r");
+    if (process != NULL) {
+        while (fgets(buff, sizeof(buff), process)) {
+            printf("%s", buff);
+            tdp_info_str += buff;
+        }
+        pclose(process);
+    }
+    return tdp_info_str;
+}
 
 void MainWindow::Ryzen_tdp_command(string Ryzen_command)
 {
