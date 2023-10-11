@@ -17,7 +17,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void Ryzen_tdp_command(string Ryzen_command);
-    string Get_tdp_Info();
+    string Get_tdp_Info(const char* tdp_type);
 
 private slots:
     void on_tdp_Slider_valueChanged(int value);
