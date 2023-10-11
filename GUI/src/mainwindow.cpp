@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <cmath>
+#include <QDebug>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -30,6 +31,12 @@ int fast_boost_int;
 int tdp_value_int;
 int Update_Num;
 int VERSION = 100;
+const char* tdp_limit_value_search = "sudo ryzenadj --info | grep -e 'STAPM LIMIT' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* tdp_value_search = "sudo ryzenadj --info | grep -e 'STAPM VALUE' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* tdp_fast_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIMIT FAST' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* tdp_fast_value_search = "sudo ryzenadj --info | grep -e 'PPT VALUE FAST' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* tdp_slow_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIMIT SLOW' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* tdp_slow_value_search = "sudo ryzenadj --info | grep -e 'PPT VALUE SLOW' | grep -Eo '[0-9]+([.][0-9]+)?'";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
@@ -50,6 +57,8 @@ string slow_boost_str;
 string fast_boost_str;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
+string tdp_display_info;
+string tdp_info_disp_temp;
 string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
@@ -492,9 +501,27 @@ void MainWindow::on_GPU_Clock_lineEdit_editingFinished()
 void MainWindow::on_tdp_info_pushButton_clicked()
 {
     QMessageBox tdp_info_Box;
-    string tdp_info_disp = Get_tdp_Info();
-    QString tdp_info_QString = QString::fromStdString(tdp_info_disp);
-    tdp_info_Box.setTextFormat(Qt::RichText);
+    tdp_display_info.clear();
+    tdp_display_info.append("Sustained TDP setting: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Sustained TDP value: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Fast TDP setting: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Fast TDP value: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Slow TDP setting: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Slow TDP value: ");
+    tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+    tdp_display_info.append(tdp_info_disp_temp);
+    QString tdp_info_QString = QString::fromStdString(tdp_display_info);
+    qDebug() << tdp_info_QString;
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
     tdp_info_Box.exec();
@@ -505,11 +532,11 @@ void MainWindow::on_exit_pushButton_clicked()
     MainWindow::~MainWindow();
 }
 
-string MainWindow::Get_tdp_Info() {
+string MainWindow::Get_tdp_Info(const char* tdp_type) {
     tdp_info_str.clear();
     FILE *process;
     char buff[1024];
-    process = popen("sudo ryzenadj --info | grep -e 'STAPM' -e 'PPT .* FAST' -e 'PPT .* SLOW'", "r");
+    process = popen(tdp_type, "r");
     if (process != NULL) {
         while (fgets(buff, sizeof(buff), process)) {
             printf("%s", buff);
