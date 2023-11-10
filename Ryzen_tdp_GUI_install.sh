@@ -19,8 +19,10 @@ EOF
 
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/tee /etc/sudoers.d 2>/dev/null
-
 yes | cp -rf $CURRENT_WD/GUI/ $HOME/.local/Ryzen_tdp_GUI 2>/dev/null
+
+SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH
+sudo chmod 666 $SYSPATH/pp_od_clk_voltage
 
 which dnf 2>/dev/null
 FEDORA_BASE=$?
