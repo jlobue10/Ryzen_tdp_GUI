@@ -48,6 +48,8 @@ private slots:
 
     void on_updateButton_Clicked();
 
+    void on_GPU_Clock_checkBox_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 };
