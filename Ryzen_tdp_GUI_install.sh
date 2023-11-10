@@ -55,7 +55,7 @@ if [ $ARCH_BASE == 0 ]; then
 	fi
  	sudo pacman -Sy --noconfirm --needed archlinux-keyring autoconf automake binutils bison debugedit fakeroot file findutils flex gawk gcc gettext\
  grep groff gzip libtool m4 make pacman patch pkgconf sed sudo texinfo which
-	sudo pacman -Sy --noconfirm --needed lib32-glibc glibc hwinfo linux-api-headers qt5-base qt5-translations cmake clang guile gc libisl libmpc qt5tools
+	sudo pacman -Sy --noconfirm lib32-glibc glibc linux-api-headers qt5-base qt5-translations clang cmake gc guile libisl libmpc qt5-tools
 fi
 
 cd $HOME/.local/Ryzen_tdp_GUI/GUI/src 2>/dev/null
