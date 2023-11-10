@@ -7,6 +7,7 @@ git clone https://github.com/jlobue10/Ryzen_tdp_GUI
 cd Ryzen_tdp_GUI
 CURRENT_WD=$(pwd) 2>/dev/null
 mkdir -p $HOME/.local/Ryzen_tdp_GUI
+cp Ryzen_tdp_GUI.ini $HOME/.local/Ryzen_tdp_GUI
 #Create file for passwordless sudo for config file, background and icon installation
 cat > $HOME/.local/Ryzen_tdp_GUI/ryzenadj <<EOF
 $USER ALL = NOPASSWD: /usr/bin/ryzenadj, /usr/sbin/ryzenadj
