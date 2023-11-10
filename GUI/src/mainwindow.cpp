@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <cmath>
-#include <QDebug>
+#include <iostream>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -37,13 +37,17 @@ const char* tdp_fast_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIM
 const char* tdp_fast_value_search = "sudo ryzenadj --info | grep -e 'PPT VALUE FAST' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_slow_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIMIT SLOW' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_slow_value_search = "sudo ryzenadj --info | grep -e 'PPT VALUE SLOW' | grep -Eo '[0-9]+([.][0-9]+)?'";
+const char* gpu_0_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | grep -a '0:' | cut -d: -f2 | grep -Eo '[0-9]{1,4}'";
+const char* gpu_1_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | grep -a '0:' | cut -d: -f2 | grep -Eo '[0-9]{1,4}'";
+const char* Secure_Boot_status = "mokutil --sb-state | grep 'SecureBoot enabled'";
+const char* GPU_SYSPATH = "SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
 QString settings_path_suffix{"/.local/Ryzen_tdp_GUI/Ryzen_tdp_GUI.ini"};
-QString fast_boost_value = "53000";  // mW
+QString fast_boost_value = "53";  // W
 QString fast_boost_value_display = "53";
-QString slow_boost_value = "44000";  // mW
+QString slow_boost_value = "44";  // W
 QString slow_boost_value_display = "44";
 QString fast_min = "5";
 QString fast_max = "53";
@@ -52,16 +56,25 @@ QString slow_max = "45";
 QString tdp_value;
 QString user_home_path_q;
 QString Ryzen_tdp_debug_out;
+QString qdeb;
+string GPU_auto_mode = "echo \"auto\" > \"";
+string GPU_manual_mode = "echo \"manual\" > \"";
+string GPU_mode_select_str;
+string GPU_SYSPATH_str;
 string gpu_clock_value_str;
 string slow_boost_str;
+string slow_boost_str_sb;
 string fast_boost_str;
+string fast_boost_str_sb;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
+string Secure_Boot_status_str;
 string tdp_display_info;
 string tdp_info_disp_temp;
 string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
+string tdp_value_str_sb;
 string Update_Num_str;
 string user_home_path_str;
 
@@ -82,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     QRegExp tdp_int_regex("^(?:[5-9]|1[0-9]|2[0-9]|30)$");
     QRegExpValidator *tdp_int_validator = new QRegExpValidator(tdp_int_regex, this);
     ui->tdp_lineEdit->setValidator(tdp_int_validator);
+    connect(ui->GPU_Clock_checkBox, &QCheckBox::stateChanged, this, &MainWindow::on_GPU_Clock_checkBox_stateChanged);
     user_home_path << "/home/" << tdp_USER;
     user_home_path_str = user_home_path.str();
     user_home_path_q = QString::fromStdString(user_home_path_str);
@@ -115,287 +129,245 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
 {
     tdp_value_int = ui->tdp_Slider->value();
     Boost_bool = ui->Boost_checkBox->isChecked();
-    Ryzen_tdp_command_str.clear();
-    Ryzen_tdp_command_str.append("sudo ryzenadj");
     switch(tdp_value_int){
         case 5:
-            Ryzen_tdp_command_str.append(" --stapm-limit=5000 --tctl-temp=85");
             if(!Boost_bool){
-                slow_boost_value = "6000";
-                fast_boost_value = "7000";
+                slow_boost_value = "6";
+                fast_boost_value = "7";
                 }
             break;
         case 6:
-            Ryzen_tdp_command_str.append(" --stapm-limit=6000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "7500";
-                fast_boost_value = "9000";
+                slow_boost_value = "7";
+                fast_boost_value = "9";
                 }
             break;
         case 7:
-            Ryzen_tdp_command_str.append(" --stapm-limit=7000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "9000";
-                fast_boost_value = "11000";
+                slow_boost_value = "9";
+                fast_boost_value = "11";
                 }
             break;
         case 8:
-            Ryzen_tdp_command_str.append(" --stapm-limit=8000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "9000";
-                fast_boost_value = "10538";
+                slow_boost_value = "9";
+                fast_boost_value = "10";
                 }
             break;
         case 9:
-            Ryzen_tdp_command_str.append(" --stapm-limit=9000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "10000";
-                fast_boost_value = "11717";
+                slow_boost_value = "10";
+                fast_boost_value = "12";
                 }
             break;
         case 10:
-            Ryzen_tdp_command_str.append(" --stapm-limit=10000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "11000";
-                fast_boost_value = "12897";
+                slow_boost_value = "11";
+                fast_boost_value = "13";
                 }
             break;
         case 11:
-            Ryzen_tdp_command_str.append(" --stapm-limit=11000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "12000";
-                fast_boost_value = "14076";
+                slow_boost_value = "12";
+                fast_boost_value = "14";
                 }
             break;
         case 12:
-            Ryzen_tdp_command_str.append(" --stapm-limit=12000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "13000";
-                fast_boost_value = "15256";
+                slow_boost_value = "13";
+                fast_boost_value = "15";
                 }
             break;
         case 13:
-            Ryzen_tdp_command_str.append(" --stapm-limit=13000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "14000";
-                fast_boost_value = "16435";
+                slow_boost_value = "14";
+                fast_boost_value = "16";
                 }
             break;
         case 14:
-            Ryzen_tdp_command_str.append(" --stapm-limit=14000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "15000";
-                fast_boost_value = "17615";
+                slow_boost_value = "15";
+                fast_boost_value = "18";
                 }
             break;
         case 15:
-            Ryzen_tdp_command_str.append(" --stapm-limit=15000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "16000";
-                fast_boost_value = "18794";
+                slow_boost_value = "16";
+                fast_boost_value = "19";
                 }
             break;
         case 16:
-            Ryzen_tdp_command_str.append(" --stapm-limit=16000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "17000";
-                fast_boost_value = "19974";
+                slow_boost_value = "17";
+                fast_boost_value = "20";
                 }
             break;
         case 17:
-            Ryzen_tdp_command_str.append(" --stapm-limit=17000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "18000";
-                fast_boost_value = "21153";
+                slow_boost_value = "18";
+                fast_boost_value = "21";
                 }
             break;
         case 18:
-            Ryzen_tdp_command_str.append(" --stapm-limit=18000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "19000";
-                fast_boost_value = "22333";
+                slow_boost_value = "19";
+                fast_boost_value = "22";
                 }
             break;
         case 19:
-            Ryzen_tdp_command_str.append(" --stapm-limit=19000 --tctl-temp=95");
             if(!Boost_bool){
                 slow_boost_value = "20000";
-                fast_boost_value = "23512";
+                fast_boost_value = "23";
                 }
             break;
         case 20:
-            Ryzen_tdp_command_str.append(" --stapm-limit=20000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "21000";
-                fast_boost_value = "24692";
+                slow_boost_value = "21";
+                fast_boost_value = "25";
                 }
             break;
         case 21:
-            Ryzen_tdp_command_str.append(" --stapm-limit=21000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "22000";
-                fast_boost_value = "25871";
+                slow_boost_value = "22";
+                fast_boost_value = "26";
                 }
             break;
         case 22:
-            Ryzen_tdp_command_str.append(" --stapm-limit=22000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "23000";
-                fast_boost_value = "27051";
+                slow_boost_value = "23";
+                fast_boost_value = "27";
                 }
             break;
         case 23:
-            Ryzen_tdp_command_str.append(" --stapm-limit=23000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "24000";
-                fast_boost_value = "28230";
+                slow_boost_value = "24";
+                fast_boost_value = "28";
                 }
             break;
         case 24:
-            Ryzen_tdp_command_str.append(" --stapm-limit=24000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "25000";
-                fast_boost_value = "29410";
+                slow_boost_value = "25";
+                fast_boost_value = "29";
                 }
             break;
         case 25:
-            Ryzen_tdp_command_str.append(" --stapm-limit=25000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "26000";
-                fast_boost_value = "30589";
+                slow_boost_value = "26";
+                fast_boost_value = "30";
                 }
             break;
         case 26:
-            Ryzen_tdp_command_str.append(" --stapm-limit=26000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "27000";
-                fast_boost_value = "31769";
+                slow_boost_value = "27";
+                fast_boost_value = "32";
                 }
             break;
         case 27:
-            Ryzen_tdp_command_str.append(" --stapm-limit=27000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "28000";
-                fast_boost_value = "32948";
+                slow_boost_value = "28";
+                fast_boost_value = "33";
                 }
             break;
         case 28:
-            Ryzen_tdp_command_str.append(" --stapm-limit=28000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "29000";
-                fast_boost_value = "34128";
+                slow_boost_value = "29";
+                fast_boost_value = "34";
                 }
             break;
         case 29:
-            Ryzen_tdp_command_str.append(" --stapm-limit=29000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "30000";
-                fast_boost_value = "35307";
+                slow_boost_value = "30";
+                fast_boost_value = "35";
                 }
             break;
         case 30:
-            Ryzen_tdp_command_str.append(" --stapm-limit=30000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "26000";
-                fast_boost_value = "30589";
+                slow_boost_value = "26";
+                fast_boost_value = "30";
             }
             break;
         case 31:
-            Ryzen_tdp_command_str.append(" --stapm-limit=31000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "32000";
-                fast_boost_value = "37666";
+                slow_boost_value = "32";
+                fast_boost_value = "38";
                 }
             break;
         case 32:
-            Ryzen_tdp_command_str.append(" --stapm-limit=32000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "33000";
-                fast_boost_value = "38846";
+                slow_boost_value = "33";
+                fast_boost_value = "39";
                 }
             break;
         case 33:
-            Ryzen_tdp_command_str.append(" --stapm-limit=33000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "34000";
-                fast_boost_value = "40025";
+                slow_boost_value = "34";
+                fast_boost_value = "40";
                 }
             break;
         case 34:
-            Ryzen_tdp_command_str.append(" --stapm-limit=34000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "35000";
-                fast_boost_value = "41205";
+                slow_boost_value = "35";
+                fast_boost_value = "41";
                 }
             break;
         case 35:
-            Ryzen_tdp_command_str.append(" --stapm-limit=35000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "36000";
-                fast_boost_value = "42384";
+                slow_boost_value = "36";
+                fast_boost_value = "42";
                 }
             break;
         case 36:
-            Ryzen_tdp_command_str.append(" --stapm-limit=36000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "37000";
-                fast_boost_value = "43564";
+                slow_boost_value = "37";
+                fast_boost_value = "43";
                 }
             break;
         case 37:
-            Ryzen_tdp_command_str.append(" --stapm-limit=37000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "38000";
-                fast_boost_value = "44743";
+                slow_boost_value = "38";
+                fast_boost_value = "44";
                 }
             break;
         case 38:
-            Ryzen_tdp_command_str.append(" --stapm-limit=38000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "39000";
-                fast_boost_value = "45923";
+                slow_boost_value = "39";
+                fast_boost_value = "45";
                 }
             break;
         case 39:
-            Ryzen_tdp_command_str.append(" --stapm-limit=39000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "40000";
-                fast_boost_value = "47102";
+                slow_boost_value = "40";
+                fast_boost_value = "47";
                 }
             break;
         case 40:
-            Ryzen_tdp_command_str.append(" --stapm-limit=40000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "41000";
-                fast_boost_value = "48282";
+                slow_boost_value = "41";
+                fast_boost_value = "48";
                 }
             break;
         case 41:
-            Ryzen_tdp_command_str.append(" --stapm-limit=41000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "42000";
-                fast_boost_value = "49461";
+                slow_boost_value = "42";
+                fast_boost_value = "49";
                 }
             break;
         case 42:
-            Ryzen_tdp_command_str.append(" --stapm-limit=42000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "43000";
-                fast_boost_value = "50641";
+                slow_boost_value = "43";
+                fast_boost_value = "50";
                 }
             break;
         case 43:
-            Ryzen_tdp_command_str.append(" --stapm-limit=43000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "44000";
-                fast_boost_value = "51820";
+                slow_boost_value = "44";
+                fast_boost_value = "51";
                 }
             break;
         case 44:
-            Ryzen_tdp_command_str.append(" --stapm-limit=44000 --tctl-temp=95");
             if(!Boost_bool){
-                slow_boost_value = "45000";
-                fast_boost_value = "53000";
+                slow_boost_value = "45";
+                fast_boost_value = "53";
             }
             break;
     }
@@ -403,18 +375,14 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
             slow_boost_value = ui->slow_tdp_lineEdit->text();
             fast_boost_value = ui->fast_tdp_lineEdit->text();
             slow_boost_int = slow_boost_value.toInt(&ok);
-            slow_boost_int = slow_boost_int * 1000;
             slow_boost_str = to_string(slow_boost_int);
             fast_boost_int = fast_boost_value.toInt(&ok);
-            fast_boost_int = fast_boost_int * 1000;
             fast_boost_str = to_string(fast_boost_int);
         }else {
             slow_boost_float = slow_boost_value.toFloat(&ok);
-            slow_boost_float = slow_boost_float / 1000.0;
             slow_boost_int = static_cast<int>(round(slow_boost_float));
             slow_boost_value_display = QString::number(slow_boost_int);
             fast_boost_float = fast_boost_value.toFloat(&ok);
-            fast_boost_float = fast_boost_float / 1000.0;
             fast_boost_int = static_cast<int>(round(fast_boost_float));
             fast_boost_value_display = QString::number(fast_boost_int);
             ui->slow_tdp_lineEdit->setText(slow_boost_value_display);
@@ -422,18 +390,42 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
             slow_boost_str = slow_boost_value.toStdString();
             fast_boost_str = fast_boost_value.toStdString();
         }
-        Ryzen_tdp_command_str.append(" --slow-limit=");
-        Ryzen_tdp_command_str.append(slow_boost_str);
-        Ryzen_tdp_command_str.append(" --fast-limit=");
+        tdp_value_str = to_string(tdp_value_int);
+        Ryzen_tdp_command_str.clear();
+        Ryzen_tdp_command_str.append("echo ");
         Ryzen_tdp_command_str.append(fast_boost_str);
+        Ryzen_tdp_command_str.append(" | sudo tee /sys/devices/platform/asus-nb-wmi/ppt_fppt");
         Ryzen_tdp_command(Ryzen_tdp_command_str);
+        Ryzen_tdp_command_str.clear();
+        Ryzen_tdp_command_str.append("echo ");
+        Ryzen_tdp_command_str.append(slow_boost_str);
+        Ryzen_tdp_command_str.append(" | sudo tee /sys/devices/platform/asus-nb-wmi/ppt_pl2_sppt");
+        Ryzen_tdp_command(Ryzen_tdp_command_str);
+        Ryzen_tdp_command_str.clear();
+        Ryzen_tdp_command_str.append("echo ");
+        Ryzen_tdp_command_str.append(tdp_value_str);
+        Ryzen_tdp_command_str.append(" | sudo tee /sys/devices/platform/asus-nb-wmi/ppt_pl1_spl");
+        Ryzen_tdp_command(Ryzen_tdp_command_str);
+        tdp_value_str_sb = tdp_value_str;
+        fast_boost_str_sb = fast_boost_str;
+        slow_boost_str_sb = slow_boost_str;
 }
 
 void MainWindow::on_GPU_Apply_pushButton_clicked()
 {
     Ryzen_gpu_command_str.clear();
     GPU_Clock_bool = ui->GPU_Clock_checkBox->isChecked();
+    GPU_mode_select_str.clear();
+    GPU_SYSPATH_str.clear();
+    GPU_SYSPATH_str = Get_tdp_Info(GPU_SYSPATH);
+    if (!GPU_SYSPATH_str.empty() && GPU_SYSPATH_str.back() == '\n') {
+        GPU_SYSPATH_str.pop_back(); // Remove the last character
+    }
     if (GPU_Clock_bool){
+        GPU_mode_select_str.append(GPU_manual_mode);
+        GPU_mode_select_str.append(GPU_SYSPATH_str);
+        GPU_mode_select_str.append("/power_dpm_force_performance_level\"");
+        Ryzen_tdp_command(GPU_mode_select_str);
         gpu_clock_value = ui->GPU_Clock_lineEdit->text();
         if(gpu_clock_value == ""){
             GPU_Clock_value_int = ui->GPU_Clock_Slider->value();
@@ -447,9 +439,19 @@ void MainWindow::on_GPU_Apply_pushButton_clicked()
             GPU_Clock_value_int = 2700;
         }
         gpu_clock_value_str = to_string(GPU_Clock_value_int);
-        Ryzen_gpu_command_str = "sudo ryzenadj --gfx-clk=";
+        Ryzen_gpu_command_str.append("echo -e \"s 0 ");
         Ryzen_gpu_command_str.append(gpu_clock_value_str);
+        Ryzen_gpu_command_str.append("\ns 1 ");
+        Ryzen_gpu_command_str.append(gpu_clock_value_str);
+        Ryzen_gpu_command_str.append("\nc\" > \"");
+        Ryzen_gpu_command_str.append(GPU_SYSPATH_str);
+        Ryzen_gpu_command_str.append("/pp_od_clk_voltage\"");
         Ryzen_tdp_command(Ryzen_gpu_command_str);
+    } else {
+        GPU_mode_select_str.append(GPU_auto_mode);
+        GPU_mode_select_str.append(GPU_SYSPATH_str);
+        GPU_mode_select_str.append("/power_dpm_force_performance_level\"");
+        Ryzen_tdp_command(GPU_mode_select_str);
     }
 }
 
@@ -502,26 +504,40 @@ void MainWindow::on_tdp_info_pushButton_clicked()
 {
     QMessageBox tdp_info_Box;
     tdp_display_info.clear();
-    tdp_display_info.append("Sustained TDP setting: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("Sustained TDP value: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("Fast TDP setting: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("Fast TDP value: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("Slow TDP setting: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("Slow TDP value: ");
-    tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
-    tdp_display_info.append(tdp_info_disp_temp);
+    Secure_Boot_status_str.clear();
+    Secure_Boot_status_str = Get_tdp_Info(Secure_Boot_status);
+    if (!Secure_Boot_status_str.empty() && Secure_Boot_status_str.back() == '\n') {
+        Secure_Boot_status_str.pop_back(); // Remove the last character
+    }
+    // show tdp settings info a different way if Secure Boot is enabled...
+    if(Secure_Boot_status_str == "SecureBoot enabled"){
+        tdp_display_info.append("Sustained TDP setting: ");
+        tdp_display_info.append(tdp_value_str_sb);
+        tdp_display_info.append("\nFast TDP setting: ");
+        tdp_display_info.append(fast_boost_str_sb);
+        tdp_display_info.append("\nSlow TDP setting: ");
+        tdp_display_info.append(slow_boost_str_sb);
+    }else {
+        tdp_display_info.append("Sustained TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Sustained TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Fast TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Fast TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Slow TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Slow TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+    }
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
-    qDebug() << tdp_info_QString;
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
     tdp_info_Box.exec();
@@ -566,6 +582,9 @@ void MainWindow::readSettings()
     QString tempGPU = settings.value("gpu_clock").toString();
     QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
     QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
+    QString tempTDP = settings.value("tdp_stored").toString();
+    QString tempFastBoost = settings.value("fast_boost_stored").toString();
+    QString tempSlowBoost = settings.value("slow_boost_stored").toString();
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
@@ -576,6 +595,9 @@ void MainWindow::readSettings()
     ui->tdp_Slider->setValue(tempTDP_Slider.toInt(&ok));
     ui->GPU_Clock_Slider->setValue(tempGPU_Slider.toInt(&ok));
     ui->GPU_Clock_lineEdit->setText(tempGPU_Slider);
+    tdp_value_str_sb = tempTDP.toStdString();
+    fast_boost_str_sb = tempFastBoost.toStdString();
+    slow_boost_str_sb = tempSlowBoost.toStdString();
 }
 
 void MainWindow::writeSettings()
@@ -592,6 +614,9 @@ void MainWindow::writeSettings()
     settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
     settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
     settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
+    settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
+    settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
+    settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
     settings.endGroup();
 }
 
@@ -634,4 +659,47 @@ void MainWindow::on_updateButton_Clicked()
     }
     UpdateBox.setStandardButtons(QMessageBox::Ok);
     UpdateBox.exec();
+}
+
+void MainWindow::on_GPU_Clock_checkBox_stateChanged(int arg1)
+{
+    Ryzen_gpu_command_str.clear();
+    GPU_mode_select_str.clear();
+    GPU_SYSPATH_str.clear();
+    GPU_SYSPATH_str = Get_tdp_Info(GPU_SYSPATH);
+    if (!GPU_SYSPATH_str.empty() && GPU_SYSPATH_str.back() == '\n') {
+        GPU_SYSPATH_str.pop_back(); // Remove the last character
+    }
+    if (arg1 == Qt::Checked){
+        GPU_mode_select_str.append(GPU_manual_mode);
+        GPU_mode_select_str.append(GPU_SYSPATH_str);
+        GPU_mode_select_str.append("/power_dpm_force_performance_level\"");
+        Ryzen_tdp_command(GPU_mode_select_str);
+        gpu_clock_value = ui->GPU_Clock_lineEdit->text();
+        if(gpu_clock_value == ""){
+            GPU_Clock_value_int = ui->GPU_Clock_Slider->value();
+        }else {
+            GPU_Clock_value_int = gpu_clock_value.toInt(&ok);
+        }
+        if(GPU_Clock_value_int < 800){
+            GPU_Clock_value_int = 800;
+        }
+        if(GPU_Clock_value_int > 2700){
+            GPU_Clock_value_int = 2700;
+        }
+        gpu_clock_value_str = to_string(GPU_Clock_value_int);
+        Ryzen_gpu_command_str.append("echo -e \"s 0 ");
+        Ryzen_gpu_command_str.append(gpu_clock_value_str);
+        Ryzen_gpu_command_str.append("\ns 1 ");
+        Ryzen_gpu_command_str.append(gpu_clock_value_str);
+        Ryzen_gpu_command_str.append("\nc\" > \"");
+        Ryzen_gpu_command_str.append(GPU_SYSPATH_str);
+        Ryzen_gpu_command_str.append("/pp_od_clk_voltage\"");
+        Ryzen_tdp_command(Ryzen_gpu_command_str);
+    } else {
+        GPU_mode_select_str.append(GPU_auto_mode);
+        GPU_mode_select_str.append(GPU_SYSPATH_str);
+        GPU_mode_select_str.append("/power_dpm_force_performance_level\"");
+        Ryzen_tdp_command(GPU_mode_select_str);
+    }
 }
