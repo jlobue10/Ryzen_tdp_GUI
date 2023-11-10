@@ -7,6 +7,9 @@ read -p "Please make sure a user password is already set before continuing. If y
  or sudo password, please exit this installer with 'Ctrl+c' and then create a password either using 'passwd'\
  from a command line or by using the KDE Plasma User settings GUI. Otherwise, press Enter/Return to continue with the install."
 
+cd $HOME
+git clone https://github.com/jlobue10/Ryzen_tdp_GUI
+cd Ryzen_tdp_GUI
 CURRENT_WD=$(pwd) 2>/dev/null
 mkdir -p $HOME/.local/Ryzen_tdp_GUI
 #Create file for passwordless sudo for config file, background and icon installation
@@ -14,7 +17,12 @@ cat > $HOME/.local/Ryzen_tdp_GUI/ryzenadj <<EOF
 $USER ALL = NOPASSWD: /usr/bin/ryzenadj, /usr/sbin/ryzenadj
 EOF
 
-sudo cp $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
+cat > $HOME/.local/Ryzen_tdp_GUI/tee <<EOF
+$USER ALL = NOPASSWD: /usr/bin/tee
+EOF
+
+sudo cp -f $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
+sudo cp -f $HOME/.local/Ryzen_tdp_GUI/tee /etc/sudoers.d 2>/dev/null
 
 yes | cp -rf $CURRENT_WD/GUI/ $HOME/.local/Ryzen_tdp_GUI 2>/dev/null
 
@@ -26,8 +34,8 @@ NOBARA=$?
 
 if [ $FEDORA_BASE == 0 ]; then
 	echo -e '\nFedora based installation starting.\n'
-		sudo dnf install cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist
-  		#sudo dnf install qt6-qtbase-devel qt6-qttools-devel 
+		sudo dnf install cmake gcc-c++ mokutil qt5-qtbase-devel qt5-qttools-devel qt5-linguist ryzenadj
+  		#sudo dnf install qt6-qtbase-devel qt6-qttools-devel
 fi
 
 which apt 2>/dev/null
