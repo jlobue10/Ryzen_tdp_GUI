@@ -45,9 +45,17 @@ fi
 which pacman 2>/dev/null
 ARCH_BASE=$?
 
+cat /etc/os-release | grep ChimeraOS
+CHIMERA_BASE=$?
+
 if [ $ARCH_BASE == 0 ]; then
 	echo -e '\nArch based installation starting.\n'
-	#sudo pacman init and then pacman install build deps
+	if [ $CHIMERA_BASE == 0 ]; then
+        	sudo frzr-unlock
+	fi
+ 	sudo pacman -Sy --noconfirm archlinux-keyring autoconf automake binutils bison debugedit fakeroot file findutils flex gawk gcc gettext\
+ grep groff gzip libtool m4 make pacman patch pkgconf sed sudo texinfo which
+	sudo pacman -Sy --noconfirm lib32-glibc glibc hwinfo linux-api-headers qt5-base
 fi
 
 cd $HOME/.local/Ryzen_tdp_GUI/GUI/src 2>/dev/null
