@@ -8,6 +8,7 @@ read -p "Please make sure a user password is already set before continuing. If y
  from a command line or by using the KDE Plasma User settings GUI. Otherwise, press Enter/Return to continue with the install."
 
 cd $HOME
+rm -rf Ryzen_tdp_GUI
 git clone https://github.com/jlobue10/Ryzen_tdp_GUI
 cd Ryzen_tdp_GUI
 CURRENT_WD=$(pwd) 2>/dev/null
