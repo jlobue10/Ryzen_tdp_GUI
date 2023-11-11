@@ -50,8 +50,8 @@ if [ $ARCH_BASE == 0 ]; then
 	if [ $CHIMERA_BASE == 0 ]; then
         	sudo frzr-unlock
 	fi
- 	sudo pacman -Sy --noconfirm base-devel cmake make jsoncpp cppdap rhash
-	sudo pacman -Sy --noconfirm lib32-glibc glibc linux-api-headers qt5-base qt5-translations clang cmake gc guile libisl libmpc qt5-tools
+ 	sudo pacman -Sy --noconfirm base-devel cmake make clang gc jsoncpp cppdap libisl libmpc rhash guile
+	sudo pacman -Sy --noconfirm lib32-glibc glibc linux-api-headers qt5-base qt5-translations qt5-tools
 fi
 
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
