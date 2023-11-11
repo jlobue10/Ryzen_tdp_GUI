@@ -55,7 +55,7 @@ if [ $ARCH_BASE == 0 ]; then
 	if [ $CHIMERA_BASE == 0 ]; then
         	sudo frzr-unlock
 	fi
- 	sudo pacman -Sy --noconfirm --needed archlinux-keyring autoconf automake binutils bison debugedit fakeroot file findutils flex gawk gcc gettext\
+ 	sudo pacman -Sy --noconfirm archlinux-keyring autoconf automake binutils bison debugedit fakeroot file findutils flex gawk gcc gettext\
  grep groff gzip libtool m4 make pacman patch pkgconf sed sudo texinfo which
 	sudo pacman -Sy --noconfirm lib32-glibc glibc linux-api-headers qt5-base qt5-translations clang cmake gc guile libisl libmpc qt5-tools
 fi
