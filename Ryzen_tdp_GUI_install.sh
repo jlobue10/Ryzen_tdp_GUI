@@ -57,6 +57,7 @@ fi
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/tee /etc/sudoers.d 2>/dev/null
 SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH
+sudo chmod 666 $SYSPATH/power_dpm_force_performance_level
 sudo chmod 666 $SYSPATH/pp_od_clk_voltage
 cd $HOME/.local/Ryzen_tdp_GUI/GUI/src 2>/dev/null
 mkdir -p build 2>/dev/null
