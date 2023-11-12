@@ -51,12 +51,8 @@ if [ $ARCH_BASE == 0 ]; then
 fi
 
 sudo cp -f $HOME/.local/Ryzen_tdp_GUI/ryzenadj /etc/sudoers.d 2>/dev/null
-sudo cp $CURRENT_WD/gpu_clock_tdp_perms.service /etc/systemd/system
-sudo systemctl daemon-reload
-sudo systemctl enable --now gpu_clock_tdp_perms.service
-SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH
-sudo chmod 666 $SYSPATH/{power_dpm_force_performance_level,pp_od_clk_voltage}
-sudo chmod 222 /sys/devices/platform/asus-nb-wmi/{ppt_fppt,ppt_pl1_spl,ppt_pl2_sppt}
+sudo cp $CURRENT_WD/{99-amdgpu-z1e-clock.rules,99-ryzen-tdp.rules} /usr/lib/udev/rules.d
+sudo udevadm control --reload-rules && sudo udevadm trigger
 cd $HOME/.local/Ryzen_tdp_GUI/GUI/src 2>/dev/null
 mkdir -p build 2>/dev/null
 cd build 2>/dev/null
