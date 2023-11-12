@@ -1,0 +1,1 @@
+ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/pci0000:00/0000:00:08.1/0000:09:00.0/{pp_od_clk_voltage,power_dpm_force_performance_level}'"
