@@ -97,5 +97,5 @@ if [ ! -f /usr/bin/Ryzen_tdp_GUI ]; then
 	exit 1
 fi
 
-cp /usr/share/applications/Ryzen_tdp_GUI.desktop $HOME/Desktop
+cp /usr/share/applications/Ryzen_tdp_GUI.desktop $HOME/Desktop/Ryzen_tdp_GUI.desktop
 chmod +x $HOME/Desktop/Ryzen_tdp_GUI.desktop
