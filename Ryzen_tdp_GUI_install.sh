@@ -17,10 +17,10 @@ cat > $HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI.desktop <<EOF
 [Desktop Entry]
 Categories=System;
 Comment=Ryzen tdp GUI
-Exec=$HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI
+Exec=/usr/bin/Ryzen_tdp_GUI
 GenericName=Ryzen tdp GUI
 Name=Ryzent tdp GUI
-Path=$HOME/.local/Ryzen_tdp_GUI/GUI
+Path=/usr/bin
 Icon=$HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI_icon.png
 StartupNotify=true
 Terminal=false
@@ -99,3 +99,4 @@ fi
 
 cp /usr/share/applications/Ryzen_tdp_GUI.desktop $HOME/Desktop/Ryzen_tdp_GUI.desktop
 chmod +x $HOME/Desktop/Ryzen_tdp_GUI.desktop
+rm -rf $HOME/.local/Ryzen_tdp_GUI/GUI/src
