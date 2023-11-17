@@ -105,6 +105,9 @@
          <property name="toolTip">
           <string>TDP value</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
          <property name="readOnly">
           <bool>false</bool>
          </property>
@@ -240,6 +243,9 @@
          </property>
          <property name="toolTip">
           <string>Manual GPU Clock value</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="readOnly">
           <bool>false</bool>
