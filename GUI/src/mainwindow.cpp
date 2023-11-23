@@ -105,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->GPU_Clock_checkBox, &QCheckBox::stateChanged, this, &MainWindow::on_GPU_Clock_checkBox_stateChanged);
     connect(MCU_Mode_check_timer, &QTimer::timeout, this, &MainWindow::update_MCU_Mode_lineEdit);
     ui->MCU_Mode_lineEdit->setReadOnly(true);
+    update_MCU_Mode_lineEdit();
     user_home_path << "/home/" << tdp_USER;
     user_home_path_str = user_home_path.str();
     user_home_path_q = QString::fromStdString(user_home_path_str);
