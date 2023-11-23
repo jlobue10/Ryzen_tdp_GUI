@@ -9,6 +9,7 @@
 #include <QRegExpValidator>
 #include <QSettings>
 #include <QString>
+#include <QTimer>
 #include <sstream>
 #include <string>
 #include <unistd.h>
@@ -41,6 +42,7 @@ const char* gpu_0_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | g
 const char* gpu_1_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | grep -a '0:' | cut -d: -f2 | grep -Eo '[0-9]{1,4}'";
 const char* Secure_Boot_status = "mokutil --sb-state | grep 'SecureBoot enabled'";
 const char* GPU_SYSPATH = "SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH";
+const char* MCU_Mode_query = "cat /sys/devices/platform/asus-mcu.0/input/mode";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
@@ -54,6 +56,7 @@ QString fast_max = "53";
 QString slow_min = "5";
 QString slow_max = "45";
 QString tdp_value;
+QString MCU_Mode;
 QString user_home_path_q;
 QString Ryzen_tdp_debug_out;
 QString qdeb;
@@ -66,6 +69,7 @@ string slow_boost_str;
 string slow_boost_str_sb;
 string fast_boost_str;
 string fast_boost_str_sb;
+string MCU_Mode_str;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string Secure_Boot_status_str;
@@ -83,6 +87,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QTimer *MCU_Mode_check_timer = new QTimer(this);
+    // Set up the timer to trigger every 10 seconds (10000 milliseconds)
+    MCU_Mode_check_timer->start(10000);
     QRegExp slow_int_regex("^(?:[5-9]|[1-3][0-9]|4[0-5])$");
     QRegExpValidator *slow_int_validator = new QRegExpValidator(slow_int_regex, this);
     ui->slow_tdp_lineEdit->setValidator(slow_int_validator);
@@ -96,6 +103,8 @@ MainWindow::MainWindow(QWidget *parent)
     QRegExpValidator *tdp_int_validator = new QRegExpValidator(tdp_int_regex, this);
     ui->tdp_lineEdit->setValidator(tdp_int_validator);
     connect(ui->GPU_Clock_checkBox, &QCheckBox::stateChanged, this, &MainWindow::on_GPU_Clock_checkBox_stateChanged);
+    connect(MCU_Mode_check_timer, &QTimer::timeout, this, &MainWindow::update_MCU_Mode_lineEdit);
+    ui->MCU_Mode_lineEdit->setReadOnly(true);
     user_home_path << "/home/" << tdp_USER;
     user_home_path_str = user_home_path.str();
     user_home_path_q = QString::fromStdString(user_home_path_str);
@@ -702,4 +711,30 @@ void MainWindow::on_GPU_Clock_checkBox_stateChanged(int arg1)
         GPU_mode_select_str.append("/power_dpm_force_performance_level\"");
         Ryzen_tdp_command(GPU_mode_select_str);
     }
+}
+
+void MainWindow::update_MCU_Mode_lineEdit() {
+    // Update the value of MCU_Mode_lineEdit
+    MCU_Mode_str = Get_tdp_Info(MCU_Mode_query);
+    if (!MCU_Mode_str.empty() && MCU_Mode_str.back() == '\n') {
+        MCU_Mode_str.pop_back(); // Remove the last character
+    }
+    if(MCU_Mode_str == "0"){
+        MCU_Mode = "GamePad Mode";
+    }
+    if(MCU_Mode_str == "1"){
+        MCU_Mode = "Lizard (Mouse) Mode";
+    }
+    if(MCU_Mode_str == "2"){
+        MCU_Mode = "Macro Mode";
+    }
+    if((MCU_Mode_str != "0") && (MCU_Mode_str != "1") && (MCU_Mode_str != "2")){
+        MCU_Mode = "Unknown Mode";
+    }
+    ui->MCU_Mode_lineEdit->setText(MCU_Mode);
+}
+
+void MainWindow::on_Refresh_pushButton_clicked()
+{
+    update_MCU_Mode_lineEdit();
 }
