@@ -84,7 +84,7 @@ EOF
 	cmake ..
 	make
  	# Move compiled Ryzen_tdp_GUI binary into GUI folder
-	cp Ryzen_tdp_GUI /usr/bin/Ryzen_tdp_GUI 2>/dev/null
+	sudo cp Ryzen_tdp_GUI /usr/bin/Ryzen_tdp_GUI 2>/dev/null
  	sudo cp $HOME/.local/Ryzen_tdp_GUI/GUI/Ryzen_tdp_GUI.desktop /usr/share/applications 2>/dev/null
 fi
 
