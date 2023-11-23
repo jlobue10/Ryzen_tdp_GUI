@@ -7,20 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>275</height>
+    <height>264</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Ryzen TDP Control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
       <width>581</width>
-      <height>251</height>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -54,14 +54,173 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+     <item row="0" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="slow_label">
+         <property name="toolTip">
+          <string>Slow Boost override</string>
+         </property>
+         <property name="text">
+          <string>Slow</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="slow_tdp_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Slow Boost override</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="slow_tdp_label">
+         <property name="maximumSize">
+          <size>
+           <width>41</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Watts</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QLabel" name="APU_tdp_label_2">
+         <property name="text">
+          <string>ROG ALLY MCU Mode:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="MCU_Mode_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>ASUS ROG ALLY MCU Mode</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Refresh_pushButton">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>29</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item alignment="Qt::AlignRight">
+        <widget class="QLabel" name="fast_label">
+         <property name="toolTip">
+          <string>Fast Boost override</string>
+         </property>
+         <property name="text">
+          <string>Fast</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="fast_tdp_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Fast Boost override</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="fast_tdp_label">
+         <property name="maximumSize">
+          <size>
+           <width>41</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Watts</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
       <widget class="QLabel" name="APU_tdp_label">
        <property name="text">
         <string>APU TDP Setting</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="3">
+     <item row="3" column="0" colspan="3">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QSlider" name="tdp_Slider">
@@ -122,9 +281,15 @@
        </item>
        <item>
         <widget class="QPushButton" name="tdp_Apply_pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>62</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>62</width>
            <height>30</height>
           </size>
          </property>
@@ -138,7 +303,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QCheckBox" name="GPU_Clock_checkBox">
        <property name="toolTip">
         <string>Enable GPU Clock override</string>
@@ -151,7 +316,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="4" column="2" alignment="Qt::AlignRight">
       <widget class="QPushButton" name="tdp_info_pushButton">
        <property name="maximumSize">
         <size>
@@ -164,14 +329,14 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+     <item row="5" column="0" alignment="Qt::AlignHCenter|Qt::AlignBottom">
       <widget class="QLabel" name="GPU_Clock_Manual_label">
        <property name="text">
         <string>GPU Clock Manual Setting</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1" alignment="Qt::AlignRight">
+     <item row="5" column="1" alignment="Qt::AlignRight">
       <widget class="QPushButton" name="About_pushButton">
        <property name="maximumSize">
         <size>
@@ -184,11 +349,17 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="2">
+     <item row="5" column="2" alignment="Qt::AlignRight">
       <widget class="QPushButton" name="exit_pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>62</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>60</width>
+         <width>62</width>
          <height>29</height>
         </size>
        </property>
@@ -197,7 +368,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0" colspan="3">
+     <item row="6" column="0" colspan="3">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QSlider" name="GPU_Clock_Slider">
@@ -272,113 +443,6 @@
          </property>
          <property name="text">
           <string>Apply</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="slow_label">
-         <property name="toolTip">
-          <string>Slow Boost override</string>
-         </property>
-         <property name="text">
-          <string>Slow</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="slow_tdp_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Slow Boost override</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="slow_tdp_label">
-         <property name="maximumSize">
-          <size>
-           <width>41</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Watts</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1" colspan="2">
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item alignment="Qt::AlignRight">
-        <widget class="QLabel" name="fast_label">
-         <property name="toolTip">
-          <string>Fast Boost override</string>
-         </property>
-         <property name="text">
-          <string>Fast</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="fast_tdp_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Fast Boost override</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="fast_tdp_label">
-         <property name="maximumSize">
-          <size>
-           <width>41</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Watts</string>
          </property>
         </widget>
        </item>
