@@ -50,6 +50,10 @@ private slots:
 
     void on_GPU_Clock_checkBox_stateChanged(int arg1);
 
+    void update_MCU_Mode_lineEdit();
+
+    void on_Refresh_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
