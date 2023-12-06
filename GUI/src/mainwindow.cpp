@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <cmath>
 #include <iostream>
+#include <libudev.h>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -11,6 +12,7 @@
 #include <QString>
 #include <QTimer>
 #include <sstream>
+#include <stdlib.h>
 #include <string>
 #include <unistd.h>
 
@@ -26,6 +28,7 @@ bool Boost_bool;
 bool GPU_Clock_bool;
 float fast_boost_float;
 float slow_boost_float;
+int Find_MCU_Mode_test_res;
 int GPU_Clock_value_int = 2200;
 int slow_boost_int;
 int fast_boost_int;
@@ -42,15 +45,19 @@ const char* gpu_0_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | g
 const char* gpu_1_value = "cat /sys/class/drm/card*/device/pp_od_clk_voltage | grep -a '0:' | cut -d: -f2 | grep -Eo '[0-9]{1,4}'";
 const char* Secure_Boot_status = "mokutil --sb-state | grep 'SecureBoot enabled'";
 const char* GPU_SYSPATH = "SYSPATH=`find /sys/devices -name pp_od_clk_voltage 2>/dev/null | sed 's|/pp_od_clk_voltage||g' |head -n1` && echo $SYSPATH";
-const char* MCU_Mode_query = "cat /sys/devices/platform/asus-mcu.0/input/mode";
+const char* amd_pstate_status = "cat /sys/devices/system/cpu/amd_pstate/status";
+const char* scaling_governor = "cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor";
+const char* scaling_driver = "cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver";
+const char* energy_performance_preference = "cat /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference";
+const char* throttle_thermal_policy = "cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
 QString settings_path_suffix{"/.local/Ryzen_tdp_GUI/Ryzen_tdp_GUI.ini"};
-QString fast_boost_value = "53";  // W
+QString fast_boost_value = "53";
 QString fast_boost_value_display = "53";
-QString slow_boost_value = "44";  // W
-QString slow_boost_value_display = "44";
+QString slow_boost_value = "43";
+QString slow_boost_value_display = "43";
 QString fast_min = "5";
 QString fast_max = "53";
 QString slow_min = "5";
@@ -60,6 +67,7 @@ QString MCU_Mode;
 QString user_home_path_q;
 QString Ryzen_tdp_debug_out;
 QString qdeb;
+string dev_name;
 string GPU_auto_mode = "echo \"auto\" > \"";
 string GPU_manual_mode = "echo \"manual\" > \"";
 string GPU_mode_select_str;
@@ -69,7 +77,9 @@ string slow_boost_str;
 string slow_boost_str_sb;
 string fast_boost_str;
 string fast_boost_str_sb;
+string MCU_Mode_path_str;
 string MCU_Mode_str;
+string MCU_Mode_test_str;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string Secure_Boot_status_str;
@@ -79,6 +89,7 @@ string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
 string tdp_value_str_sb;
+string thermal_str;
 string Update_Num_str;
 string user_home_path_str;
 
@@ -544,9 +555,39 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("Slow TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        tdp_info_disp_temp = (tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
     }
+    tdp_display_info.append("\nAMD Pstate status: ");
+    tdp_info_disp_temp = Get_tdp_Info(amd_pstate_status);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Scaling Driver: ");
+    tdp_info_disp_temp = Get_tdp_Info(scaling_driver);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Scaling Governor: ");
+    tdp_info_disp_temp = Get_tdp_Info(scaling_governor);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("EPP setting in use: ");
+    tdp_info_disp_temp = Get_tdp_Info(energy_performance_preference);
+    tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("Thermal policy: ");
+    thermal_str = Get_tdp_Info(throttle_thermal_policy);
+    if (!thermal_str.empty() && thermal_str.back() == '\n') {
+        thermal_str.pop_back(); // Remove the last character
+    }
+    if(thermal_str == "0"){
+        tdp_info_disp_temp = "Balanced";
+    }
+    if(thermal_str == "1"){
+        tdp_info_disp_temp = "Performance";
+    }
+    if(thermal_str == "2"){
+        tdp_info_disp_temp = "Quiet";
+    }
+    if((thermal_str != "0") && (thermal_str != "1") && (thermal_str != "2")){
+        tdp_info_disp_temp = "Unknown";
+    }
+    tdp_display_info.append(tdp_info_disp_temp);
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
@@ -714,25 +755,115 @@ void MainWindow::on_GPU_Clock_checkBox_stateChanged(int arg1)
     }
 }
 
+string MainWindow::find_device(struct udev *udev) {
+    struct udev_enumerate *const enumerate = udev_enumerate_new(udev);
+    if (enumerate == NULL) {
+        fprintf(stderr, "Error in udev_enumerate_new: mode switch will not be available.\n");
+        return "\0";
+    }
+
+    const int add_match_subsystem_res = udev_enumerate_add_match_subsystem(enumerate, "hid");
+    if (add_match_subsystem_res != 0) {
+        fprintf(stderr, "Error in udev_enumerate_add_match_subsystem: %d\n", add_match_subsystem_res);
+
+        udev_enumerate_unref(enumerate);
+
+        return "\0";
+    }
+
+    const int add_match_sysattr_res = udev_enumerate_add_match_sysattr(enumerate, "gamepad_mode", NULL);
+    if (add_match_sysattr_res != 0) {
+        fprintf(stderr, "Error in udev_enumerate_add_match_sysattr: %d\n", add_match_sysattr_res);
+
+        udev_enumerate_unref(enumerate);
+
+        return "\0";
+    }
+
+    const int enumerate_scan_devices_res = udev_enumerate_scan_devices(enumerate);
+    if (enumerate_scan_devices_res != 0) {
+        fprintf(stderr, "Error in udev_enumerate_scan_devices: %d\n", enumerate_scan_devices_res);
+
+        udev_enumerate_unref(enumerate);
+
+        return "\0";
+    }
+
+    struct udev_list_entry *const udev_lst_frst = udev_enumerate_get_list_entry(enumerate);
+
+    struct udev_list_entry *list_entry = NULL;
+    udev_list_entry_foreach(list_entry, udev_lst_frst) {
+        const char* name = udev_list_entry_get_name(list_entry);
+
+        udev_enumerate_unref(enumerate);
+        MCU_Mode_path_str = string(name);
+        MCU_Mode_path_str.append("/gamepad_mode");
+        return MCU_Mode_path_str;
+    }
+
+    udev_enumerate_unref(enumerate);
+    return "\0";
+}
+
 void MainWindow::update_MCU_Mode_lineEdit() {
     // Update the value of MCU_Mode_lineEdit
-    MCU_Mode_str = Get_tdp_Info(MCU_Mode_query);
+    MCU_Mode_path_str.clear();
+    MCU_Mode_test_str.clear();
+    MCU_Mode_str.clear();
+    /* create udev object */
+    Find_MCU_Mode_test_res = init_platform(&Find_MCU_Mode_test.platform);
+    printf("The MCU Mode test result is: %d\n", Find_MCU_Mode_test_res);
+    //printf("MCU Mode path if it was found is here %s\n", MCU_Mode_test_str.c_str());
+    if (Find_MCU_Mode_test_res == 0) {
+        printf("MCU finding platform correctly initialized\n");
+    }
+    if(!MCU_Mode_path_str.empty()){
+        MCU_Mode_test_str.append("cat ");
+        MCU_Mode_test_str.append(MCU_Mode_path_str);
+    }
+    MCU_Mode_str = Get_tdp_Info(MCU_Mode_test_str.c_str());
     if (!MCU_Mode_str.empty() && MCU_Mode_str.back() == '\n') {
         MCU_Mode_str.pop_back(); // Remove the last character
     }
-    if(MCU_Mode_str == "0"){
+    if(MCU_Mode_str == "1"){
         MCU_Mode = "GamePad Mode";
     }
-    if(MCU_Mode_str == "1"){
-        MCU_Mode = "Lizard (Mouse) Mode";
-    }
     if(MCU_Mode_str == "2"){
-        MCU_Mode = "Macro Mode";
+        MCU_Mode = "WASD Mode";
     }
-    if((MCU_Mode_str != "0") && (MCU_Mode_str != "1") && (MCU_Mode_str != "2")){
+    if(MCU_Mode_str == "3"){
+        MCU_Mode = "Mouse Mode";
+    }
+    if((MCU_Mode_str != "1") && (MCU_Mode_str != "2") && (MCU_Mode_str != "3")){
         MCU_Mode = "Unknown Mode";
     }
     ui->MCU_Mode_lineEdit->setText(MCU_Mode);
+}
+
+int MainWindow::init_platform(rc71l_platform_t *const platform) {
+    platform->udev = {};
+    dev_name.clear();
+
+        /* create udev object */
+        platform->udev = udev_new();
+        if (platform->udev == NULL) {
+            fprintf(stderr, "Cannot create udev context: mode switch will not be available.\n");
+            platform->mode = -1;
+            return 1;
+        }
+
+        dev_name = find_device(platform->udev);
+        if (dev_name.empty()) {
+            fprintf(stderr, "Cannot locate asus-mcu device: mode switch will not be available.\n");
+            platform->mode = -1;
+            return 1;
+        } else {
+            printf("Asus MCU over hidraw has been found\n");
+            //MCU_Mode_path_str = dev_name;
+            return 0;
+        }
+
+        return 1;
 }
 
 void MainWindow::on_Refresh_pushButton_clicked()
