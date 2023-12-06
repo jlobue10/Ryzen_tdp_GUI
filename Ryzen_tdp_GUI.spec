@@ -1,20 +1,19 @@
 %global _name   Ryzen_tdp_GUI
 
 Name:           Ryzen_tdp_GUI
-Version:        1.0.0
+Version:        1.1.0
 Release:        1%{?dist}
 Summary:        Small GUI for Ryzen TDP and GPU clock control
 
 License:        GPL3
 URL:            https://github.com/jlobue10/Ryzen_tdp_GUI
-Source0:        Ryzen_tdp_GUI-main.zip
 Source1:        99-amdgpu-z1e-clock.rules
 Source2:        99-ryzen-tdp.rules
 Source3:        ryzenadj
 Source4:        Ryzen_tdp_GUI.desktop
 
-BuildRequires:  cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist
-Requires:       mokutil ryzenadj
+BuildRequires:  cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist libudev-devel
+Requires:       mokutil ryzenadj libudev
 Provides:       Ryzen_tdp_GUI
 Conflicts:      Ryzen_tdp_GUI
 
@@ -23,20 +22,13 @@ Ryzen_tdp_GUI
 
 %prep
 rm -rf %{_builddir}/Ryzen_tdp_GUI
-cd $RPM_SOURCE_DIR
-rm -f Ryzen_tdp_GUI-main.zip
-wget https://github.com/jlobue10/Ryzen_tdp_GUI/archive/refs/heads/main.zip
-mv main.zip Ryzen_tdp_GUI-main.zip
-unzip $RPM_SOURCE_DIR/Ryzen_tdp_GUI-main.zip -d %{_builddir}
-mkdir -p %{_builddir}/Ryzen_tdp_GUI
-cp -rf %{_builddir}/Ryzen_tdp_GUI-main/* %{_builddir}/Ryzen_tdp_GUI
-rm -rf %{_builddir}/Ryzen_tdp_GUI-main
+cd %{_builddir}
+git clone %{url}
+mkdir -p %{_builddir}/Ryzen_tdp_GUI/GUI/src/build
 cp -f %{_builddir}/Ryzen_tdp_GUI/{99-amdgpu-z1e-clock.rules,99-ryzen-tdp.rules,ryzenadj,Ryzen_tdp_GUI.desktop} $RPM_SOURCE_DIR
 
 %build
-cd %{_builddir}/Ryzen_tdp_GUI/GUI/src
-mkdir -p build
-cd build
+cd %{_builddir}/Ryzen_tdp_GUI/GUI/src/build
 cmake ..
 make
 
@@ -67,5 +59,5 @@ udevadm trigger
 /etc/sudoers.d/ryzenadj
 
 %changelog
-* Sun Nov 12 2023 Jon LoBue <jlobue10@gmail.com> [1.0.0-1]
+* Wed Dec 6 2023 Jon LoBue <jlobue10@gmail.com> [1.1.0-1]
 - Initial package
