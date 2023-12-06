@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBUDEV REQUIRED libudev)
+
 set(TS_FILES Ryzen_tdp_GUI_en_US.ts)
 
 set(PROJECT_SOURCES
@@ -49,7 +52,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(Ryzen_tdp_GUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Ryzen_tdp_GUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${LIBUDEV_LIBRARIES})
 
 set_target_properties(Ryzen_tdp_GUI PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
