@@ -62,7 +62,6 @@ string power_governor = "echo \"powersave\" | tee /sys/devices/system/cpu/cpufre
 string perform_governor = "echo \"performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/scaling_governor";
 string epp_balance_perform = "echo \"balance_performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 string epp_balance_power = "echo \"balance_power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
-string epp_default = "echo \"default\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 string epp_perform = "echo \"performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 string epp_power = "echo \"power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 ostringstream user_home_path;
@@ -953,8 +952,6 @@ void MainWindow::set_energy_performance_pref()
         Ryzen_tdp_command(epp_balance_perform);
     if(EPP_setting == "balance_power")
         Ryzen_tdp_command(epp_balance_power);
-    if(EPP_setting == "default")
-        Ryzen_tdp_command(epp_default);
     if(EPP_setting == "performance")
         Ryzen_tdp_command(epp_perform);
     if(EPP_setting == "power")
