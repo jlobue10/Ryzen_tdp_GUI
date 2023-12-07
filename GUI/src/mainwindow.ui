@@ -26,7 +26,7 @@
    <string>Ryzen TDP Control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -350,11 +350,6 @@
        <item>
         <property name="text">
          <string>balance_power</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>default</string>
         </property>
        </item>
        <item>
