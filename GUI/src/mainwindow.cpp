@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <libudev.h>
 #include <QLineEdit>
@@ -50,6 +51,20 @@ const char* scaling_governor = "cat /sys/devices/system/cpu/cpufreq/policy0/scal
 const char* scaling_driver = "cat /sys/devices/system/cpu/cpufreq/policy0/scaling_driver";
 const char* energy_performance_preference = "cat /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference";
 const char* throttle_thermal_policy = "cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
+const char* asusctl_check = "which asusctl | xargs -n 1 basename";
+string throttle_balanced = "echo 0 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
+string throttle_performance = "echo 1 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
+string throttle_quiet = "echo 2 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
+string throttle_balanced_asusctl = "asusctl profile -P Balanced";
+string throttle_performance_asusctl = "asusctl profile -P Performance";
+string throttle_quiet_asusctl = "asusctl profile -P Quiet";
+string power_governor = "echo \"powersave\" | tee /sys/devices/system/cpu/cpufreq/policy*/scaling_governor";
+string perform_governor = "echo \"performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/scaling_governor";
+string epp_balance_perform = "echo \"balance_performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
+string epp_balance_power = "echo \"balance_power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
+string epp_default = "echo \"default\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
+string epp_perform = "echo \"performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
+string epp_power = "echo \"power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
@@ -66,8 +81,9 @@ QString tdp_value;
 QString MCU_Mode;
 QString user_home_path_q;
 QString Ryzen_tdp_debug_out;
-QString qdeb;
-string dev_name;
+QString Scaling_Governor;
+QString EPP_setting;
+string asusctl_check_res;
 string GPU_auto_mode = "echo \"auto\" > \"";
 string GPU_manual_mode = "echo \"manual\" > \"";
 string GPU_mode_select_str;
@@ -89,6 +105,7 @@ string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
 string tdp_value_str_sb;
+string thermal_policy;
 string thermal_str;
 string Update_Num_str;
 string user_home_path_str;
@@ -411,6 +428,9 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
             slow_boost_str = slow_boost_value.toStdString();
             fast_boost_str = fast_boost_value.toStdString();
         }
+        set_thermal_policy(tdp_value_int);
+        set_scaling_governor();
+        set_energy_performance_pref();
         tdp_value_str = to_string(tdp_value_int);
         Ryzen_tdp_command_str.clear();
         Ryzen_tdp_command_str.append("echo ");
@@ -623,19 +643,23 @@ void MainWindow::readSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-    bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
-    bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
-    bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
+        bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
+        bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
+        bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
     settings.endGroup();
     settings.beginGroup("Values");
-    QString tempSlow = settings.value("slow_tdp").toString();
-    QString tempFast = settings.value("fast_tdp").toString();
-    QString tempGPU = settings.value("gpu_clock").toString();
-    QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
-    QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
-    QString tempTDP = settings.value("tdp_stored").toString();
-    QString tempFastBoost = settings.value("fast_boost_stored").toString();
-    QString tempSlowBoost = settings.value("slow_boost_stored").toString();
+        QString tempSlow = settings.value("slow_tdp").toString();
+        QString tempFast = settings.value("fast_tdp").toString();
+        QString tempGPU = settings.value("gpu_clock").toString();
+        QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
+        QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
+        QString tempTDP = settings.value("tdp_stored").toString();
+        QString tempFastBoost = settings.value("fast_boost_stored").toString();
+        QString tempSlowBoost = settings.value("slow_boost_stored").toString();
+    settings.endGroup();
+    settings.beginGroup("ComboBoxes");
+        int Governor_int = settings.value("Governor_ComboBox").toInt();
+        int EPP_int = settings.value("EPP_ComboBox").toInt();
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
@@ -649,25 +673,31 @@ void MainWindow::readSettings()
     tdp_value_str_sb = tempTDP.toStdString();
     fast_boost_str_sb = tempFastBoost.toStdString();
     slow_boost_str_sb = tempSlowBoost.toStdString();
+    ui->Governor_comboBox->setCurrentIndex(Governor_int);
+    ui->EPP_comboBox->setCurrentIndex(EPP_int);
 }
 
 void MainWindow::writeSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-    settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
-    settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
-    settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
+        settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
+        settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
+        settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
     settings.endGroup();
     settings.beginGroup("Values");
-    settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
-    settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
-    settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
-    settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
-    settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
-    settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
-    settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
-    settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
+        settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
+        settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
+        settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
+        settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
+        settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
+        settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
+        settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
+        settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
+    settings.endGroup();
+    settings.beginGroup("ComboBoxes");
+        settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
+        settings.setValue("EPP_ComboBox", ui->EPP_comboBox->currentIndex());
     settings.endGroup();
 }
 
@@ -755,38 +785,39 @@ void MainWindow::on_GPU_Clock_checkBox_stateChanged(int arg1)
     }
 }
 
-string MainWindow::find_device(struct udev *udev) {
+char* MainWindow::find_device(struct udev *udev) {
     struct udev_enumerate *const enumerate = udev_enumerate_new(udev);
     if (enumerate == NULL) {
         fprintf(stderr, "Error in udev_enumerate_new: mode switch will not be available.\n");
-        return "\0";
+        printf("Error in udev_enumerate_new: mode switch will not be available.\n");
+        return NULL;
     }
 
     const int add_match_subsystem_res = udev_enumerate_add_match_subsystem(enumerate, "hid");
     if (add_match_subsystem_res != 0) {
         fprintf(stderr, "Error in udev_enumerate_add_match_subsystem: %d\n", add_match_subsystem_res);
-
+        printf("Error in udev_enumerate_add_match_subsystem\n");
         udev_enumerate_unref(enumerate);
 
-        return "\0";
+        return NULL;
     }
 
     const int add_match_sysattr_res = udev_enumerate_add_match_sysattr(enumerate, "gamepad_mode", NULL);
     if (add_match_sysattr_res != 0) {
         fprintf(stderr, "Error in udev_enumerate_add_match_sysattr: %d\n", add_match_sysattr_res);
-
+        printf("Error in udev_enumerate_add_match_sysattr\n");
         udev_enumerate_unref(enumerate);
 
-        return "\0";
+        return NULL;
     }
 
     const int enumerate_scan_devices_res = udev_enumerate_scan_devices(enumerate);
     if (enumerate_scan_devices_res != 0) {
         fprintf(stderr, "Error in udev_enumerate_scan_devices: %d\n", enumerate_scan_devices_res);
-
+        printf("Error in udev_enumerate_scan_devices\n");
         udev_enumerate_unref(enumerate);
 
-        return "\0";
+        return NULL;
     }
 
     struct udev_list_entry *const udev_lst_frst = udev_enumerate_get_list_entry(enumerate);
@@ -795,14 +826,21 @@ string MainWindow::find_device(struct udev *udev) {
     udev_list_entry_foreach(list_entry, udev_lst_frst) {
         const char* name = udev_list_entry_get_name(list_entry);
 
+        const unsigned long len = strlen(name) + 1;
+        char* const result = new char[len];
+        memset(result, 0, len);
+        strncat(result, name, len - 1);
+
         udev_enumerate_unref(enumerate);
-        MCU_Mode_path_str = string(name);
-        MCU_Mode_path_str.append("/gamepad_mode");
-        return MCU_Mode_path_str;
+
+        return result;
+        //MCU_Mode_path_str = string(name);
+        //MCU_Mode_path_str.append("/gamepad_mode");
+        //return MCU_Mode_path_str;
     }
 
     udev_enumerate_unref(enumerate);
-    return "\0";
+    return NULL;
 }
 
 void MainWindow::update_MCU_Mode_lineEdit() {
@@ -812,10 +850,10 @@ void MainWindow::update_MCU_Mode_lineEdit() {
     MCU_Mode_str.clear();
     /* create udev object */
     Find_MCU_Mode_test_res = init_platform(&Find_MCU_Mode_test.platform);
-    printf("The MCU Mode test result is: %d\n", Find_MCU_Mode_test_res);
+    //printf("The MCU Mode test result is: %d\n", Find_MCU_Mode_test_res);
     //printf("MCU Mode path if it was found is here %s\n", MCU_Mode_test_str.c_str());
     if (Find_MCU_Mode_test_res == 0) {
-        printf("MCU finding platform correctly initialized\n");
+        printf("MCU discovery platform correctly initialized\n");
     }
     if(!MCU_Mode_path_str.empty()){
         MCU_Mode_test_str.append("cat ");
@@ -841,8 +879,7 @@ void MainWindow::update_MCU_Mode_lineEdit() {
 }
 
 int MainWindow::init_platform(rc71l_platform_t *const platform) {
-    platform->udev = {};
-    dev_name.clear();
+    platform->udev = NULL;
 
         /* create udev object */
         platform->udev = udev_new();
@@ -852,21 +889,74 @@ int MainWindow::init_platform(rc71l_platform_t *const platform) {
             return 1;
         }
 
-        dev_name = find_device(platform->udev);
-        if (dev_name.empty()) {
+        char *const dev_name = find_device(platform->udev);
+        if (dev_name == NULL) {
             fprintf(stderr, "Cannot locate asus-mcu device: mode switch will not be available.\n");
             platform->mode = -1;
             return 1;
         } else {
             printf("Asus MCU over hidraw has been found\n");
-            //MCU_Mode_path_str = dev_name;
+            delete[] dev_name;
             return 0;
         }
-
+        delete[] dev_name;
         return 1;
 }
 
 void MainWindow::on_Refresh_pushButton_clicked()
 {
     update_MCU_Mode_lineEdit();
+}
+
+void MainWindow::set_thermal_policy(int thermal_policy_int)
+{
+    asusctl_check_res = Get_tdp_Info(asusctl_check);
+    if (!asusctl_check_res.empty() && asusctl_check_res.back() == '\n') {
+        asusctl_check_res.pop_back(); // Remove the last character
+    }
+    if(thermal_policy_int < 9) {
+        if(asusctl_check_res == "asusctl") {
+            Ryzen_tdp_command(throttle_quiet_asusctl);
+        } else {
+            Ryzen_tdp_command(throttle_quiet);
+        }
+    }
+    if((thermal_policy_int >= 9) && (tdp_value_int < 19)) {
+        if(asusctl_check_res == "asusctl") {
+            Ryzen_tdp_command(throttle_balanced_asusctl);
+        } else {
+            Ryzen_tdp_command(throttle_balanced);
+        }
+    }
+    if(thermal_policy_int >= 19) {
+        if(asusctl_check_res == "asusctl") {
+            Ryzen_tdp_command(throttle_performance_asusctl);
+        } else {
+            Ryzen_tdp_command(throttle_performance);
+        }
+    }
+}
+
+void MainWindow::set_scaling_governor()
+{
+    Scaling_Governor = ui->Governor_comboBox->currentText();
+    if(Scaling_Governor == "powersave")
+        Ryzen_tdp_command(power_governor);
+    if(Scaling_Governor == "performance")
+        Ryzen_tdp_command(perform_governor);
+}
+
+void MainWindow::set_energy_performance_pref()
+{
+    EPP_setting = ui->EPP_comboBox->currentText();
+    if(EPP_setting == "balance_performance")
+        Ryzen_tdp_command(epp_balance_perform);
+    if(EPP_setting == "balance_power")
+        Ryzen_tdp_command(epp_balance_power);
+    if(EPP_setting == "default")
+        Ryzen_tdp_command(epp_default);
+    if(EPP_setting == "performance")
+        Ryzen_tdp_command(epp_perform);
+    if(EPP_setting == "power")
+        Ryzen_tdp_command(epp_power);
 }
