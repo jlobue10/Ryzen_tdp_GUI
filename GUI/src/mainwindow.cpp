@@ -303,8 +303,8 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
             break;
         case 30:
             if(!Boost_bool){
-                slow_boost_value = "26";
-                fast_boost_value = "30";
+                slow_boost_value = "31";
+                fast_boost_value = "36";
             }
             break;
         case 31:
