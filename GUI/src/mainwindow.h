@@ -38,6 +38,11 @@ public:
     } Find_MCU_Mode_t;
 
    Find_MCU_Mode_t Find_MCU_Mode_test;
+   int init_platform(rc71l_platform_t *const platform);
+   char* find_device(struct udev *udev);
+   void set_thermal_policy(int thermal_policy_int);
+   void set_scaling_governor();
+   void set_energy_performance_pref();
 
 private slots:
     void on_tdp_Slider_valueChanged(int value);
@@ -69,10 +74,6 @@ private slots:
     void on_updateButton_Clicked();
 
     void on_GPU_Clock_checkBox_stateChanged(int arg1);
-
-    string find_device(struct udev *udev);
-
-    int init_platform(rc71l_platform_t *const platform);
 
     void update_MCU_Mode_lineEdit();
 
