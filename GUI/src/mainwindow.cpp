@@ -915,6 +915,7 @@ void MainWindow::set_thermal_policy(int thermal_policy_int)
     }
     if(thermal_policy_int < 9) {
         if(asusctl_check_res == "asusctl") {
+            printf("Using Asusctl to set thermal policy\n");
             Ryzen_tdp_command(throttle_quiet_asusctl);
         } else {
             Ryzen_tdp_command(throttle_quiet);
@@ -922,6 +923,7 @@ void MainWindow::set_thermal_policy(int thermal_policy_int)
     }
     if((thermal_policy_int >= 9) && (tdp_value_int < 19)) {
         if(asusctl_check_res == "asusctl") {
+            printf("Using Asusctl to set thermal policy\n");
             Ryzen_tdp_command(throttle_balanced_asusctl);
         } else {
             Ryzen_tdp_command(throttle_balanced);
@@ -929,8 +931,10 @@ void MainWindow::set_thermal_policy(int thermal_policy_int)
     }
     if(thermal_policy_int >= 19) {
         if(asusctl_check_res == "asusctl") {
+            printf("Using Asusctl to set thermal policy\n");
             Ryzen_tdp_command(throttle_performance_asusctl);
         } else {
+            //printf("$s\n", asusctl_check_res.c_str());
             Ryzen_tdp_command(throttle_performance);
         }
     }
