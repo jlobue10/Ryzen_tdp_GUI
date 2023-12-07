@@ -38,7 +38,7 @@ NOBARA=$?
 
 if [ $FEDORA_BASE == 0 ]; then
 	echo -e '\nFedora based installation starting.\n'
-	sudo dnf install -y cmake gcc-c++ mokutil qt5-qtbase-devel qt5-qttools-devel qt5-linguist ryzenadj
+	sudo dnf install -y cmake gcc-c++ mokutil qt5-qtbase-devel qt5-qttools-devel qt5-linguist ryzenadj libudev-devel
   	mkdir -p $HOME/rpmbuild/{SPECS,SOURCES}
 	cp Ryzen_tdp_GUI.spec $HOME/rpmbuild/SPECS
 	rpmbuild -bb --target=x86_64 $HOME/rpmbuild/SPECS/Ryzen_tdp_GUI.spec
