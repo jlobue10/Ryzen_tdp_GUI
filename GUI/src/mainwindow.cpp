@@ -574,7 +574,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("Slow TDP value: ");
-        tdp_info_disp_temp = (tdp_slow_value_search);
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
     }
     tdp_display_info.append("\nAMD Pstate status: ");
