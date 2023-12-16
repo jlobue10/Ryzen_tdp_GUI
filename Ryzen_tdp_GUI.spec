@@ -12,7 +12,7 @@ Source2:        99-ryzen-tdp.rules
 Source3:        ryzenadj
 Source4:        Ryzen_tdp_GUI.desktop
 
-BuildRequires:  cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist libudev-devel
+BuildRequires:  cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist
 Requires:       mokutil ryzenadj
 Provides:       Ryzen_tdp_GUI
 Conflicts:      Ryzen_tdp_GUI
