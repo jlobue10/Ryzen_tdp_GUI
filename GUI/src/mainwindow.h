@@ -19,27 +19,6 @@ public:
     void Ryzen_tdp_command(string Ryzen_command);
     string Get_tdp_Info(const char* tdp_type);
 
-    typedef enum rc71l_platform_mode {
-        rc71l_platform_mode_hidraw,
-        rc71l_platform_mode_asus_mcu,
-    } rc71l_platform_mode_t;
-
-    typedef struct rc71l_platform {
-        struct udev *udev;
-
-        rc71l_platform_mode_t platform_mode;
-
-        unsigned long mode;
-        unsigned int modes_count;
-    } rc71l_platform_t;
-
-    typedef struct Find_MCU_Mode {
-        rc71l_platform_t platform;
-    } Find_MCU_Mode_t;
-
-   Find_MCU_Mode_t Find_MCU_Mode_test;
-   int init_platform(rc71l_platform_t *const platform);
-   char* find_device(struct udev *udev);
    void set_thermal_policy(int thermal_policy_int);
    void set_scaling_governor();
    void set_energy_performance_pref();
