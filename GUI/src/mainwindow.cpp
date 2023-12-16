@@ -3,7 +3,6 @@
 #include <cmath>
 #include <cstring>
 #include <iostream>
-#include <libudev.h>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
@@ -52,6 +51,7 @@ const char* scaling_driver = "cat /sys/devices/system/cpu/cpufreq/policy0/scalin
 const char* energy_performance_preference = "cat /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference";
 const char* throttle_thermal_policy = "cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 const char* asusctl_check = "which asusctl | xargs -n 1 basename";
+const char* MCU_Mode_test = "cat /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/gamepad_mode";
 string throttle_balanced = "echo 0 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_performance = "echo 1 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_quiet = "echo 2 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
@@ -92,9 +92,7 @@ string slow_boost_str;
 string slow_boost_str_sb;
 string fast_boost_str;
 string fast_boost_str_sb;
-string MCU_Mode_path_str;
 string MCU_Mode_str;
-string MCU_Mode_test_str;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
 string Secure_Boot_status_str;
@@ -784,81 +782,9 @@ void MainWindow::on_GPU_Clock_checkBox_stateChanged(int arg1)
     }
 }
 
-char* MainWindow::find_device(struct udev *udev) {
-    struct udev_enumerate *const enumerate = udev_enumerate_new(udev);
-    if (enumerate == NULL) {
-        fprintf(stderr, "Error in udev_enumerate_new: mode switch will not be available.\n");
-        printf("Error in udev_enumerate_new: mode switch will not be available.\n");
-        return NULL;
-    }
-
-    const int add_match_subsystem_res = udev_enumerate_add_match_subsystem(enumerate, "hid");
-    if (add_match_subsystem_res != 0) {
-        fprintf(stderr, "Error in udev_enumerate_add_match_subsystem: %d\n", add_match_subsystem_res);
-        printf("Error in udev_enumerate_add_match_subsystem\n");
-        udev_enumerate_unref(enumerate);
-
-        return NULL;
-    }
-
-    const int add_match_sysattr_res = udev_enumerate_add_match_sysattr(enumerate, "gamepad_mode", NULL);
-    if (add_match_sysattr_res != 0) {
-        fprintf(stderr, "Error in udev_enumerate_add_match_sysattr: %d\n", add_match_sysattr_res);
-        printf("Error in udev_enumerate_add_match_sysattr\n");
-        udev_enumerate_unref(enumerate);
-
-        return NULL;
-    }
-
-    const int enumerate_scan_devices_res = udev_enumerate_scan_devices(enumerate);
-    if (enumerate_scan_devices_res != 0) {
-        fprintf(stderr, "Error in udev_enumerate_scan_devices: %d\n", enumerate_scan_devices_res);
-        printf("Error in udev_enumerate_scan_devices\n");
-        udev_enumerate_unref(enumerate);
-
-        return NULL;
-    }
-
-    struct udev_list_entry *const udev_lst_frst = udev_enumerate_get_list_entry(enumerate);
-
-    struct udev_list_entry *list_entry = NULL;
-    udev_list_entry_foreach(list_entry, udev_lst_frst) {
-        const char* name = udev_list_entry_get_name(list_entry);
-
-        const unsigned long len = strlen(name) + 1;
-        char* const result = new char[len];
-        memset(result, 0, len);
-        strncat(result, name, len - 1);
-
-        udev_enumerate_unref(enumerate);
-
-        return result;
-        //MCU_Mode_path_str = string(name);
-        //MCU_Mode_path_str.append("/gamepad_mode");
-        //return MCU_Mode_path_str;
-    }
-
-    udev_enumerate_unref(enumerate);
-    return NULL;
-}
-
 void MainWindow::update_MCU_Mode_lineEdit() {
-    // Update the value of MCU_Mode_lineEdit
-    MCU_Mode_path_str.clear();
-    MCU_Mode_test_str.clear();
     MCU_Mode_str.clear();
-    /* create udev object */
-    Find_MCU_Mode_test_res = init_platform(&Find_MCU_Mode_test.platform);
-    //printf("The MCU Mode test result is: %d\n", Find_MCU_Mode_test_res);
-    //printf("MCU Mode path if it was found is here %s\n", MCU_Mode_test_str.c_str());
-    if (Find_MCU_Mode_test_res == 0) {
-        printf("MCU discovery platform correctly initialized\n");
-    }
-    if(!MCU_Mode_path_str.empty()){
-        MCU_Mode_test_str.append("cat ");
-        MCU_Mode_test_str.append(MCU_Mode_path_str);
-    }
-    MCU_Mode_str = Get_tdp_Info(MCU_Mode_test_str.c_str());
+    MCU_Mode_str = Get_tdp_Info(MCU_Mode_test);
     if (!MCU_Mode_str.empty() && MCU_Mode_str.back() == '\n') {
         MCU_Mode_str.pop_back(); // Remove the last character
     }
@@ -875,31 +801,6 @@ void MainWindow::update_MCU_Mode_lineEdit() {
         MCU_Mode = "Unknown Mode";
     }
     ui->MCU_Mode_lineEdit->setText(MCU_Mode);
-}
-
-int MainWindow::init_platform(rc71l_platform_t *const platform) {
-    platform->udev = NULL;
-
-        /* create udev object */
-        platform->udev = udev_new();
-        if (platform->udev == NULL) {
-            fprintf(stderr, "Cannot create udev context: mode switch will not be available.\n");
-            platform->mode = -1;
-            return 1;
-        }
-
-        char *const dev_name = find_device(platform->udev);
-        if (dev_name == NULL) {
-            fprintf(stderr, "Cannot locate asus-mcu device: mode switch will not be available.\n");
-            platform->mode = -1;
-            return 1;
-        } else {
-            printf("Asus MCU over hidraw has been found\n");
-            delete[] dev_name;
-            return 0;
-        }
-        delete[] dev_name;
-        return 1;
 }
 
 void MainWindow::on_Refresh_pushButton_clicked()
