@@ -26,13 +26,13 @@
    <string>Ryzen TDP Control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>11</x>
+      <y>11</y>
       <width>561</width>
-      <height>291</height>
+      <height>286</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -228,214 +228,68 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="1" alignment="Qt::AlignBottom">
-      <widget class="QLabel" name="APU_tdp_label">
-       <property name="text">
-        <string>APU TDP Setting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="3">
-      <widget class="QCheckBox" name="GPU_Clock_checkBox">
-       <property name="toolTip">
-        <string>Enable GPU Clock override</string>
-       </property>
-       <property name="text">
-        <string>Enable GPU Clock Manual override</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="5" alignment="Qt::AlignRight">
-      <widget class="QPushButton" name="tdp_info_pushButton">
-       <property name="maximumSize">
-        <size>
-         <width>62</width>
-         <height>29</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>TDP info</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignBottom">
-      <widget class="QLabel" name="GPU_Clock_Manual_label">
-       <property name="text">
-        <string>GPU Clock Manual Setting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="4">
-      <widget class="QPushButton" name="About_pushButton">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>29</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>About</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="5" alignment="Qt::AlignRight">
-      <widget class="QPushButton" name="exit_pushButton">
-       <property name="minimumSize">
-        <size>
-         <width>62</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>62</width>
-         <height>29</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Exit</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="Governor_label">
-       <property name="toolTip">
-        <string>Scaling Governor</string>
-       </property>
-       <property name="text">
-        <string>Scaling Governor</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QComboBox" name="Governor_comboBox">
-       <property name="toolTip">
-        <string>Scaling Governor</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>powersave</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>performance</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="7" column="2">
-      <widget class="QLabel" name="EPP_label">
-       <property name="toolTip">
-        <string>Energy Performance Preference</string>
-       </property>
-       <property name="text">
-        <string>Energy Pref</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="3" colspan="3">
-      <widget class="QComboBox" name="EPP_comboBox">
-       <property name="toolTip">
-        <string>Energy Performance Preference</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>balance_performance</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>balance_power</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>performance</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>power</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="6" column="0" colspan="6">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QSlider" name="GPU_Clock_Slider">
-         <property name="minimum">
-          <number>800</number>
-         </property>
-         <property name="maximum">
-          <number>2700</number>
-         </property>
-         <property name="singleStep">
-          <number>50</number>
-         </property>
-         <property name="pageStep">
-          <number>50</number>
-         </property>
-         <property name="value">
-          <number>2200</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::NoTicks</enum>
-         </property>
-         <property name="tickInterval">
-          <number>50</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="GPU_Clock_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>65</width>
-           <height>30</height>
-          </size>
-         </property>
+     <item row="2" column="0" colspan="4">
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item alignment="Qt::AlignRight">
+        <widget class="QLabel" name="Mode_Change_label">
          <property name="toolTip">
-          <string>Manual GPU Clock value</string>
+          <string>Scaling Governor</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="GPU_Clock_label">
          <property name="text">
-          <string>MHz</string>
+          <string>MCU Mode:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="GPU_Apply_pushButton">
+        <widget class="QComboBox" name="Mode_Change_comboBox">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>29</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Scaling Governor</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GamePad</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>WASD</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Mouse</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Mode_Change_Apply_pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>62</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>62</width>
            <height>30</height>
           </size>
          </property>
          <property name="toolTip">
-          <string>Manual GPU override in effect until reboot...</string>
+          <string>Apply TDP, thermal and EPP settings</string>
          </property>
          <property name="text">
           <string>Apply</string>
@@ -526,6 +380,222 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="4" column="0" colspan="3">
+      <widget class="QCheckBox" name="GPU_Clock_checkBox">
+       <property name="toolTip">
+        <string>Enable GPU Clock override</string>
+       </property>
+       <property name="text">
+        <string>Enable GPU Clock Manual override</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="5">
+      <widget class="QPushButton" name="tdp_info_pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>62</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>TDP info</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="3" alignment="Qt::AlignHCenter|Qt::AlignBottom">
+      <widget class="QLabel" name="GPU_Clock_Manual_label">
+       <property name="text">
+        <string>GPU Clock Manual Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="4" alignment="Qt::AlignRight">
+      <widget class="QPushButton" name="About_pushButton">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>About</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="5">
+      <widget class="QPushButton" name="exit_pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>62</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>62</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Exit</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="6">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QSlider" name="GPU_Clock_Slider">
+         <property name="minimum">
+          <number>800</number>
+         </property>
+         <property name="maximum">
+          <number>2700</number>
+         </property>
+         <property name="singleStep">
+          <number>50</number>
+         </property>
+         <property name="pageStep">
+          <number>50</number>
+         </property>
+         <property name="value">
+          <number>2200</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::NoTicks</enum>
+         </property>
+         <property name="tickInterval">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="GPU_Clock_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>65</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Manual GPU Clock value</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="GPU_Clock_label">
+         <property name="text">
+          <string>MHz</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="GPU_Apply_pushButton">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Manual GPU override in effect until reboot...</string>
+         </property>
+         <property name="text">
+          <string>Apply</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="Governor_label">
+       <property name="toolTip">
+        <string>Scaling Governor</string>
+       </property>
+       <property name="text">
+        <string>Scaling Governor</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="Governor_comboBox">
+       <property name="toolTip">
+        <string>Scaling Governor</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>powersave</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>performance</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="7" column="2">
+      <widget class="QLabel" name="EPP_label">
+       <property name="toolTip">
+        <string>Energy Performance Preference</string>
+       </property>
+       <property name="text">
+        <string>Energy Pref</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="3" colspan="3">
+      <widget class="QComboBox" name="EPP_comboBox">
+       <property name="toolTip">
+        <string>Energy Performance Preference</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>balance_performance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>balance_power</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>performance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>power</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="4" alignment="Qt::AlignBottom">
+      <widget class="QLabel" name="APU_tdp_label">
+       <property name="text">
+        <string>APU TDP Setting</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
