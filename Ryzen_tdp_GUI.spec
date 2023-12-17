@@ -1,7 +1,7 @@
 %global _name   Ryzen_tdp_GUI
 
 Name:           Ryzen_tdp_GUI
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Small GUI for Ryzen TDP and GPU clock control
 
@@ -11,6 +11,7 @@ Source1:        99-amdgpu-z1e-clock.rules
 Source2:        99-ryzen-tdp.rules
 Source3:        ryzenadj
 Source4:        Ryzen_tdp_GUI.desktop
+Source5:        99-ally-mcu.rules
 
 BuildRequires:  cmake gcc-c++ qt5-qtbase-devel qt5-qttools-devel qt5-linguist
 Requires:       mokutil ryzenadj
@@ -25,7 +26,7 @@ rm -rf %{_builddir}/Ryzen_tdp_GUI
 cd %{_builddir}
 git clone %{url}
 mkdir -p %{_builddir}/Ryzen_tdp_GUI/GUI/src/build
-cp -f %{_builddir}/Ryzen_tdp_GUI/{99-amdgpu-z1e-clock.rules,99-ryzen-tdp.rules,ryzenadj,Ryzen_tdp_GUI.desktop} $RPM_SOURCE_DIR
+cp -f %{_builddir}/Ryzen_tdp_GUI/{99-amdgpu-z1e-clock.rules,99-ryzen-tdp.rules,99-ally-mcu.rules,ryzenadj,Ryzen_tdp_GUI.desktop} $RPM_SOURCE_DIR
 
 %build
 cd %{_builddir}/Ryzen_tdp_GUI/GUI/src/build
@@ -44,6 +45,7 @@ install -m 644 %{SOURCE1} %{buildroot}/usr/lib/udev/rules.d
 install -m 644 %{SOURCE2} %{buildroot}/usr/lib/udev/rules.d
 install -m 644 %{SOURCE3} %{buildroot}/etc/sudoers.d
 install -m 777 %{SOURCE4} %{buildroot}/usr/share/applications
+install -m 644 %{SOURCE5} %{buildroot}/usr/lib/udev/rules.d
 
 %post
 sed -i "s@\$USER@${SUDO_USER}@g" /etc/sudoers.d/ryzenadj
@@ -52,6 +54,7 @@ udevadm control --reload-rules
 udevadm trigger
 
 %files
+/usr/lib/udev/rules.d/99-ally-mcu.rules
 /usr/lib/udev/rules.d/99-amdgpu-z1e-clock.rules
 /usr/lib/udev/rules.d/99-ryzen-tdp.rules
 /usr/bin/Ryzen_tdp_GUI
@@ -59,5 +62,5 @@ udevadm trigger
 /etc/sudoers.d/ryzenadj
 
 %changelog
-* Wed Dec 6 2023 Jon LoBue <jlobue10@gmail.com> [1.1.0-1]
+* Sun Dec 17 2023 Jon LoBue <jlobue10@gmail.com> [1.2.0-1]
 - Initial package
