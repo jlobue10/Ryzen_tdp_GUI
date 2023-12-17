@@ -58,6 +58,8 @@ private slots:
 
     void on_Refresh_pushButton_clicked();
 
+    void on_Mode_Change_Apply_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
