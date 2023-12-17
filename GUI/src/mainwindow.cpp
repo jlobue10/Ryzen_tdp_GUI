@@ -64,6 +64,10 @@ string epp_balance_perform = "echo \"balance_performance\" | tee /sys/devices/sy
 string epp_balance_power = "echo \"balance_power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 string epp_perform = "echo \"performance\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
 string epp_power = "echo \"power\" | tee /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference";
+string set_gamepad_mode = "echo 1 | tee /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/gamepad_mode";
+string set_wasd_mode = "echo 2 | tee /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/gamepad_mode";
+string set_mouse_mode = "echo 3 | tee /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/gamepad_mode";
+string apply_MCU_settings_change = "echo 1 | tee /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/apply";
 ostringstream user_home_path;
 QString gpu_clock_value;
 QString settings_path;
@@ -78,6 +82,7 @@ QString slow_min = "5";
 QString slow_max = "45";
 QString tdp_value;
 QString MCU_Mode;
+QString MCU_Mode_Change_check;
 QString user_home_path_q;
 QString Ryzen_tdp_debug_out;
 QString Scaling_Governor;
@@ -657,6 +662,7 @@ void MainWindow::readSettings()
     settings.beginGroup("ComboBoxes");
         int Governor_int = settings.value("Governor_ComboBox").toInt();
         int EPP_int = settings.value("EPP_ComboBox").toInt();
+        int Mode_Change_int = settings.value("MCU_Mode_Change").toInt();
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
@@ -672,6 +678,7 @@ void MainWindow::readSettings()
     slow_boost_str_sb = tempSlowBoost.toStdString();
     ui->Governor_comboBox->setCurrentIndex(Governor_int);
     ui->EPP_comboBox->setCurrentIndex(EPP_int);
+    ui->Mode_Change_comboBox->setCurrentIndex(Mode_Change_int);
 }
 
 void MainWindow::writeSettings()
@@ -695,6 +702,7 @@ void MainWindow::writeSettings()
     settings.beginGroup("ComboBoxes");
         settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
         settings.setValue("EPP_ComboBox", ui->EPP_comboBox->currentIndex());
+        settings.setValue("MCU_Mode_Change", ui->Mode_Change_comboBox->currentIndex());
     settings.endGroup();
 }
 
@@ -861,4 +869,16 @@ void MainWindow::set_energy_performance_pref()
         Ryzen_tdp_command(epp_perform);
     if(EPP_setting == "power")
         Ryzen_tdp_command(epp_power);
+}
+
+void MainWindow::on_Mode_Change_Apply_pushButton_clicked()
+{
+    MCU_Mode_Change_check = ui->Mode_Change_comboBox->currentText();
+    if(MCU_Mode_Change_check == "GamePad")
+        Ryzen_tdp_command(set_gamepad_mode);
+    if(MCU_Mode_Change_check == "WASD")
+        Ryzen_tdp_command(set_wasd_mode);
+    if(MCU_Mode_Change_check == "Mouse")
+        Ryzen_tdp_command(set_mouse_mode);
+    Ryzen_tdp_command(apply_MCU_settings_change);
 }
