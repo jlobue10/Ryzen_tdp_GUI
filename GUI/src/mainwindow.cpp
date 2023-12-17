@@ -34,7 +34,7 @@ int slow_boost_int;
 int fast_boost_int;
 int tdp_value_int;
 int Update_Num;
-int VERSION = 100;
+int VERSION = 120;
 const char* tdp_limit_value_search = "sudo ryzenadj --info | grep -e 'STAPM LIMIT' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_value_search = "sudo ryzenadj --info | grep -e 'STAPM VALUE' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_fast_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIMIT FAST' | grep -Eo '[0-9]+([.][0-9]+)?'";
@@ -712,7 +712,7 @@ void MainWindow::on_About_pushButton_clicked()
     QPushButton* updateButton = new QPushButton("Check For Update");
     connect(updateButton, &QPushButton::clicked, this, &MainWindow::on_updateButton_Clicked);
     AboutBox.setTextFormat(Qt::RichText);
-    AboutBox.setText("<p align='center'>Ryzen tdp GUI v1.0.0<br><br>"
+    AboutBox.setText("<p align='center'>Ryzen tdp GUI v1.2.0<br><br>"
                      "Original GUI Creator: "
                      "<a href='https://github.com/jlobue10'>jlobue10</a><br><br>"
                      "Special Thanks to Nobara Discord for testing and QA");
