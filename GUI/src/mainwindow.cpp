@@ -618,6 +618,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
 
 void MainWindow::on_exit_pushButton_clicked()
 {
+    writeSettings();
     MainWindow::~MainWindow();
 }
 
