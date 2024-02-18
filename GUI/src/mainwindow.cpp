@@ -569,10 +569,10 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(slow_boost_str_sb);
         */
         // Use same method as secure boot disabled...
-        tdp_display_info.append("<h1> align='left'>Sustained TDP setting: ");
+        tdp_display_info.append("<hr> align='left'>Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
-        tdp_display_info.append("</h1>");
         tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("</hr>");
         tdp_display_info.append("<p align='left'><br>Sustained TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
