@@ -569,59 +569,59 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(slow_boost_str_sb);
         */
         // Use same method as secure boot disabled...
-        tdp_display_info.append("Sustained TDP setting: ");
+        tdp_display_info.append("<p align='left'>Sustained TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSustained TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Sustained TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nFast TDP setting: ");
+        tdp_display_info.append("<p align='left'><br>Fast TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nFast TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Fast TDP value: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSlow TDP setting: ");
+        tdp_display_info.append("<p align='left'><br>Slow TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSlow TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Slow TDP value: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("<p style='color:green;'> Secure Boot Enabled</p><br>");
+        tdp_display_info.append("<p style='color:green;'><br>Secure Boot Enabled</p>");
     }else {
-        tdp_display_info.append("Sustained TDP setting: ");
+        tdp_display_info.append("<p align='left'>Sustained TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSustained TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Sustained TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nFast TDP setting: ");
+        tdp_display_info.append("<p align='left'><br>Fast TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nFast TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Fast TDP value: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSlow TDP setting: ");
+        tdp_display_info.append("<p align='left'><br>Slow TDP setting: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("\nSlow TDP value: ");
+        tdp_display_info.append("<p align='left'><br>Slow TDP value: </p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p><br>");
+        tdp_display_info.append("<p style='color:red;'><br>Secure Boot Disabled</p>");
     }    
-    tdp_display_info.append("AMD Pstate status: ");
+    tdp_display_info.append("<p align='left'><br>AMD Pstate status: </p>");
     tdp_info_disp_temp = Get_tdp_Info(amd_pstate_status);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("\nScaling Driver: ");
+    tdp_display_info.append("<p align='left'><br>Scaling Driver: </p>");
     tdp_info_disp_temp = Get_tdp_Info(scaling_driver);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("\nScaling Governor: ");
+    tdp_display_info.append("<p align='left'><br>Scaling Governor: </p>");
     tdp_info_disp_temp = Get_tdp_Info(scaling_governor);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("\nEPP setting in use: ");
+    tdp_display_info.append("<p align='left'><br>EPP setting in use: </p>");
     tdp_info_disp_temp = Get_tdp_Info(energy_performance_preference);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("\nThermal policy: ");
+    tdp_display_info.append("<p align='left'><br>Thermal policy: </p>");
     thermal_str = Get_tdp_Info(throttle_thermal_policy);
     if (!thermal_str.empty() && thermal_str.back() == '\n') {
         thermal_str.pop_back(); // Remove the last character
