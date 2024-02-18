@@ -547,6 +547,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
 {
     QMessageBox tdp_info_Box;
     tdp_display_info.clear();
+    tdp_info_Box.setTextFormat(Qt::RichText);
     Secure_Boot_status_str.clear();
     Secure_Boot_status_str = Get_tdp_Info(Secure_Boot_status);
     if (!Secure_Boot_status_str.empty() && Secure_Boot_status_str.back() == '\n') {
@@ -586,6 +587,8 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append("Slow TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Secure Boot: ");
+        tdp_display_info.append("<p style='color:green;'>Enabled</p><br>");
     }else {
         tdp_display_info.append("Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
@@ -605,8 +608,10 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append("Slow TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-    }
-    tdp_display_info.append("\nAMD Pstate status: ");
+        tdp_display_info.append("Secure Boot: ");
+        tdp_display_info.append("<p style='color:red;'>Disabled</p><br>");
+    }    
+    tdp_display_info.append("AMD Pstate status: ");
     tdp_info_disp_temp = Get_tdp_Info(amd_pstate_status);
     tdp_display_info.append(tdp_info_disp_temp);
     tdp_display_info.append("Scaling Driver: ");
