@@ -593,7 +593,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left' color='green'><br>Secure Boot Enabled</p>");
+        tdp_display_info.append("<hr align='left' color='green'><br>Secure Boot Enabled</hr>");
     }else {
         tdp_display_info.append("<hr align='left'>Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
@@ -619,21 +619,25 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left' color='red'><br>Secure Boot Disabled</p>");
+        tdp_display_info.append("<hr align='left' color='red'><br>Secure Boot Disabled</hr>");
     }    
-    tdp_display_info.append("<p align='left'><br>AMD Pstate status: </p>");
+    tdp_display_info.append("<hr align='left'><br>AMD Pstate status: ");
     tdp_info_disp_temp = Get_tdp_Info(amd_pstate_status);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("<p align='left'><br>Scaling Driver: </p>");
+    tdp_display_info.append("</hr>");
+    tdp_display_info.append("<hr align='left'><br>Scaling Driver: ");
     tdp_info_disp_temp = Get_tdp_Info(scaling_driver);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("<p align='left'><br>Scaling Governor: </p>");
+    tdp_display_info.append("</hr>");
+    tdp_display_info.append("<hr align='left'><br>Scaling Governor: ");
     tdp_info_disp_temp = Get_tdp_Info(scaling_governor);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("<p align='left'><br>EPP setting in use: </p>");
+    tdp_display_info.append("</hr>");
+    tdp_display_info.append("<hr align='left'><br>EPP setting in use: ");
     tdp_info_disp_temp = Get_tdp_Info(energy_performance_preference);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("<p align='left'><br>Thermal policy: </p>");
+    tdp_display_info.append("</hr>");
+    tdp_display_info.append("<hr align='left'><br>Thermal policy: ");
     thermal_str = Get_tdp_Info(throttle_thermal_policy);
     if (!thermal_str.empty() && thermal_str.back() == '\n') {
         thermal_str.pop_back(); // Remove the last character
@@ -651,6 +655,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = "Unknown";
     }
     tdp_display_info.append(tdp_info_disp_temp);
+    tdp_display_info.append("</hr>");
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
