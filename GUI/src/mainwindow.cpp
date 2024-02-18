@@ -678,24 +678,20 @@ void MainWindow::readSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-    bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
     bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
     bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
-    settings.endGroup();
-    settings.beginGroup("Values");
-    QString tempSlow = settings.value("slow_tdp").toString();
-    QString tempFast = settings.value("fast_tdp").toString();
-    QString tempGPU = settings.value("gpu_clock").toString();
-    QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
-    QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
-    QString tempTDP = settings.value("tdp_stored").toString();
-    QString tempFastBoost = settings.value("fast_boost_stored").toString();
-    QString tempSlowBoost = settings.value("slow_boost_stored").toString();
+    bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
     settings.endGroup();
     settings.beginGroup("ComboBoxes");
-    int Governor_int = settings.value("Governor_ComboBox").toInt();
     int EPP_int = settings.value("EPP_ComboBox").toInt();
+    int Governor_int = settings.value("Governor_ComboBox").toInt();
     int Mode_Change_int = settings.value("MCU_Mode_Change").toInt();
+    settings.endGroup();
+    settings.beginGroup("Values");
+    QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
+    QString tempFast = settings.value("fast_tdp").toString();
+    QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
+    QString tempSlow = settings.value("slow_tdp").toString();
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
@@ -706,9 +702,6 @@ void MainWindow::readSettings()
     ui->tdp_Slider->setValue(tempTDP_Slider.toInt(&ok));
     ui->GPU_Clock_Slider->setValue(tempGPU_Slider.toInt(&ok));
     ui->GPU_Clock_lineEdit->setText(tempGPU_Slider);
-    tdp_value_str_sb = tempTDP.toStdString();
-    fast_boost_str_sb = tempFastBoost.toStdString();
-    slow_boost_str_sb = tempSlowBoost.toStdString();
     ui->Governor_comboBox->setCurrentIndex(Governor_int);
     ui->EPP_comboBox->setCurrentIndex(EPP_int);
     ui->Mode_Change_comboBox->setCurrentIndex(Mode_Change_int);
@@ -718,24 +711,20 @@ void MainWindow::writeSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-    settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
     settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
     settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
-    settings.endGroup();
-    settings.beginGroup("Values");
-    settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
-    settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
-    settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
-    settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
-    settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
-    settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
-    settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
-    settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
+    settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
     settings.endGroup();
     settings.beginGroup("ComboBoxes");
-    settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
     settings.setValue("EPP_ComboBox", ui->EPP_comboBox->currentIndex());
+    settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
     settings.setValue("MCU_Mode_Change", ui->Mode_Change_comboBox->currentIndex());
+    settings.endGroup();
+    settings.beginGroup("Values");
+    settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
+    settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
+    settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
+    settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
     settings.endGroup();
 }
 
