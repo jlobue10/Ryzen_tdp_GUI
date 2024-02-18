@@ -554,12 +554,38 @@ void MainWindow::on_tdp_info_pushButton_clicked()
     }
     // show tdp settings info a different way if Secure Boot is enabled...
     if(Secure_Boot_status_str == "SecureBoot enabled"){
+        /* Secure boot can work with ryzenadj, even with info
+         * if kernel is compiled with CONFIG_SECURITY_LOCKDOWN_LSM_EARLY
+         * disabled. Commenting out this portion as unnecessary for now
+         * as of Feb 2024.
+         */
+        /*
         tdp_display_info.append("Sustained TDP setting: ");
         tdp_display_info.append(tdp_value_str_sb);
         tdp_display_info.append("\nFast TDP setting: ");
         tdp_display_info.append(fast_boost_str_sb);
         tdp_display_info.append("\nSlow TDP setting: ");
         tdp_display_info.append(slow_boost_str_sb);
+        */
+        // Use same method as secure boot disabled...
+        tdp_display_info.append("Sustained TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Sustained TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Fast TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Fast TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Slow TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("Slow TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
     }else {
         tdp_display_info.append("Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
