@@ -3,7 +3,7 @@ Ryzen tdp GUI  (ROG ALLY)
 
 ## Pre-requisites
 
-This GUI needs [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) installed to work. Mokutil is recommended as well to allow some basic TDP settings feedback when secure boot is enabled.
+This GUI needs [RyzenAdj](https://github.com/FlyGoat/RyzenAdj) installed to work. Mokutil is recommended as well to determine whether secure boot is enabled or not.
 
 ## Install Procedure
 ```
