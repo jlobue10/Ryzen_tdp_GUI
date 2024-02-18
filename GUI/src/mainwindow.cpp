@@ -569,7 +569,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(slow_boost_str_sb);
         */
         // Use same method as secure boot disabled...
-        tdp_display_info.append("<p align='left'>Sustained TDP setting: </p>");
+        tdp_display_info.append("<p align='left'>Sustained TDP setting: <%= @tdp_limit_value_search %></p>");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<p align='left'><br>Sustained TDP setting: </p>");
@@ -745,7 +745,7 @@ void MainWindow::on_About_pushButton_clicked()
     AboutBox.setText("<p align='center'>Ryzen tdp GUI v1.2.0<br><br>"
                      "Original GUI Creator: "
                      "<a href='https://github.com/jlobue10'>jlobue10</a><br><br>"
-                     "Special Thanks to Nobara Discord for testing and QA");
+                     "Special Thanks to Nobara Discord for testing and QA</p>");
     AboutBox.setStandardButtons(QMessageBox::Ok);
     AboutBox.addButton(updateButton, QMessageBox::ActionRole);
     AboutBox.exec();
