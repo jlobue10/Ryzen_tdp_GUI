@@ -1,7 +1,7 @@
 %global _name   Ryzen_tdp_GUI
 
 Name:           Ryzen_tdp_GUI
-Version:        1.2.0
+Version:        1.3.0
 Release:        1%{?dist}
 Summary:        Small GUI for Ryzen TDP and GPU clock control
 
@@ -62,5 +62,9 @@ udevadm trigger
 /etc/sudoers.d/ryzenadj
 
 %changelog
+* Sun Feb 18 2024 Jon LoBue <jlobue10@gmail.com> [1.3.0-1]
+- Adjusted display for secure boot status
+- Fixed settings being written properly when exiting from pressing the exit button
+
 * Sun Dec 17 2023 Jon LoBue <jlobue10@gmail.com> [1.2.0-1]
 - Initial package
