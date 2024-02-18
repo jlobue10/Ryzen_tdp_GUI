@@ -170,288 +170,288 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
     tdp_value_int = ui->tdp_Slider->value();
     Boost_bool = ui->Boost_checkBox->isChecked();
     switch(tdp_value_int){
-        case 5:
-            if(!Boost_bool){
-                slow_boost_value = "6";
-                fast_boost_value = "7";
-                }
-            break;
-        case 6:
-            if(!Boost_bool){
-                slow_boost_value = "7";
-                fast_boost_value = "9";
-                }
-            break;
-        case 7:
-            if(!Boost_bool){
-                slow_boost_value = "9";
-                fast_boost_value = "11";
-                }
-            break;
-        case 8:
-            if(!Boost_bool){
-                slow_boost_value = "9";
-                fast_boost_value = "10";
-                }
-            break;
-        case 9:
-            if(!Boost_bool){
-                slow_boost_value = "10";
-                fast_boost_value = "12";
-                }
-            break;
-        case 10:
-            if(!Boost_bool){
-                slow_boost_value = "11";
-                fast_boost_value = "13";
-                }
-            break;
-        case 11:
-            if(!Boost_bool){
-                slow_boost_value = "12";
-                fast_boost_value = "14";
-                }
-            break;
-        case 12:
-            if(!Boost_bool){
-                slow_boost_value = "13";
-                fast_boost_value = "15";
-                }
-            break;
-        case 13:
-            if(!Boost_bool){
-                slow_boost_value = "14";
-                fast_boost_value = "16";
-                }
-            break;
-        case 14:
-            if(!Boost_bool){
-                slow_boost_value = "15";
-                fast_boost_value = "18";
-                }
-            break;
-        case 15:
-            if(!Boost_bool){
-                slow_boost_value = "16";
-                fast_boost_value = "19";
-                }
-            break;
-        case 16:
-            if(!Boost_bool){
-                slow_boost_value = "17";
-                fast_boost_value = "20";
-                }
-            break;
-        case 17:
-            if(!Boost_bool){
-                slow_boost_value = "18";
-                fast_boost_value = "21";
-                }
-            break;
-        case 18:
-            if(!Boost_bool){
-                slow_boost_value = "19";
-                fast_boost_value = "22";
-                }
-            break;
-        case 19:
-            if(!Boost_bool){
-                slow_boost_value = "20000";
-                fast_boost_value = "23";
-                }
-            break;
-        case 20:
-            if(!Boost_bool){
-                slow_boost_value = "21";
-                fast_boost_value = "25";
-                }
-            break;
-        case 21:
-            if(!Boost_bool){
-                slow_boost_value = "22";
-                fast_boost_value = "26";
-                }
-            break;
-        case 22:
-            if(!Boost_bool){
-                slow_boost_value = "23";
-                fast_boost_value = "27";
-                }
-            break;
-        case 23:
-            if(!Boost_bool){
-                slow_boost_value = "24";
-                fast_boost_value = "28";
-                }
-            break;
-        case 24:
-            if(!Boost_bool){
-                slow_boost_value = "25";
-                fast_boost_value = "29";
-                }
-            break;
-        case 25:
-            if(!Boost_bool){
-                slow_boost_value = "26";
-                fast_boost_value = "30";
-                }
-            break;
-        case 26:
-            if(!Boost_bool){
-                slow_boost_value = "27";
-                fast_boost_value = "32";
-                }
-            break;
-        case 27:
-            if(!Boost_bool){
-                slow_boost_value = "28";
-                fast_boost_value = "33";
-                }
-            break;
-        case 28:
-            if(!Boost_bool){
-                slow_boost_value = "29";
-                fast_boost_value = "34";
-                }
-            break;
-        case 29:
-            if(!Boost_bool){
-                slow_boost_value = "30";
-                fast_boost_value = "35";
-                }
-            break;
-        case 30:
-            if(!Boost_bool){
-                slow_boost_value = "31";
-                fast_boost_value = "36";
-            }
-            break;
-        case 31:
-            if(!Boost_bool){
-                slow_boost_value = "32";
-                fast_boost_value = "38";
-                }
-            break;
-        case 32:
-            if(!Boost_bool){
-                slow_boost_value = "33";
-                fast_boost_value = "39";
-                }
-            break;
-        case 33:
-            if(!Boost_bool){
-                slow_boost_value = "34";
-                fast_boost_value = "40";
-                }
-            break;
-        case 34:
-            if(!Boost_bool){
-                slow_boost_value = "35";
-                fast_boost_value = "41";
-                }
-            break;
-        case 35:
-            if(!Boost_bool){
-                slow_boost_value = "36";
-                fast_boost_value = "42";
-                }
-            break;
-        case 36:
-            if(!Boost_bool){
-                slow_boost_value = "37";
-                fast_boost_value = "43";
-                }
-            break;
-        case 37:
-            if(!Boost_bool){
-                slow_boost_value = "38";
-                fast_boost_value = "44";
-                }
-            break;
-        case 38:
-            if(!Boost_bool){
-                slow_boost_value = "39";
-                fast_boost_value = "45";
-                }
-            break;
-        case 39:
-            if(!Boost_bool){
-                slow_boost_value = "40";
-                fast_boost_value = "47";
-                }
-            break;
-        case 40:
-            if(!Boost_bool){
-                slow_boost_value = "41";
-                fast_boost_value = "48";
-                }
-            break;
-        case 41:
-            if(!Boost_bool){
-                slow_boost_value = "42";
-                fast_boost_value = "49";
-                }
-            break;
-        case 42:
-            if(!Boost_bool){
-                slow_boost_value = "43";
-                fast_boost_value = "50";
-                }
-            break;
-        case 43:
-            if(!Boost_bool){
-                slow_boost_value = "44";
-                fast_boost_value = "51";
-                }
-            break;
-        case 44:
-            if(!Boost_bool){
-                slow_boost_value = "45";
-                fast_boost_value = "53";
-            }
-            break;
-    }
-        if(Boost_bool){
-            slow_boost_value = ui->slow_tdp_lineEdit->text();
-            fast_boost_value = ui->fast_tdp_lineEdit->text();
-            slow_boost_int = slow_boost_value.toInt(&ok);
-            slow_boost_str = to_string(slow_boost_int);
-            fast_boost_int = fast_boost_value.toInt(&ok);
-            fast_boost_str = to_string(fast_boost_int);
-        }else {
-            slow_boost_float = slow_boost_value.toFloat(&ok);
-            slow_boost_int = static_cast<int>(round(slow_boost_float));
-            slow_boost_value_display = QString::number(slow_boost_int);
-            fast_boost_float = fast_boost_value.toFloat(&ok);
-            fast_boost_int = static_cast<int>(round(fast_boost_float));
-            fast_boost_value_display = QString::number(fast_boost_int);
-            ui->slow_tdp_lineEdit->setText(slow_boost_value_display);
-            ui->fast_tdp_lineEdit->setText(fast_boost_value_display);
-            slow_boost_str = slow_boost_value.toStdString();
-            fast_boost_str = fast_boost_value.toStdString();
+    case 5:
+        if(!Boost_bool){
+            slow_boost_value = "6";
+            fast_boost_value = "7";
         }
-        set_thermal_policy(tdp_value_int);
-        set_scaling_governor();
-        set_energy_performance_pref();
-        tdp_value_str = to_string(tdp_value_int);
-        Ryzen_tdp_command_str.clear();
-        Ryzen_tdp_command_str.append("echo ");
-        Ryzen_tdp_command_str.append(fast_boost_str);
-        Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_fppt");
-        Ryzen_tdp_command(Ryzen_tdp_command_str);
-        Ryzen_tdp_command_str.clear();
-        Ryzen_tdp_command_str.append("echo ");
-        Ryzen_tdp_command_str.append(slow_boost_str);
-        Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_pl2_sppt");
-        Ryzen_tdp_command(Ryzen_tdp_command_str);
-        Ryzen_tdp_command_str.clear();
-        Ryzen_tdp_command_str.append("echo ");
-        Ryzen_tdp_command_str.append(tdp_value_str);
-        Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_pl1_spl");
-        Ryzen_tdp_command(Ryzen_tdp_command_str);
-        tdp_value_str_sb = tdp_value_str;
-        fast_boost_str_sb = fast_boost_str;
-        slow_boost_str_sb = slow_boost_str;
+        break;
+    case 6:
+        if(!Boost_bool){
+            slow_boost_value = "7";
+            fast_boost_value = "9";
+        }
+        break;
+    case 7:
+        if(!Boost_bool){
+            slow_boost_value = "9";
+            fast_boost_value = "11";
+        }
+        break;
+    case 8:
+        if(!Boost_bool){
+            slow_boost_value = "9";
+            fast_boost_value = "10";
+        }
+        break;
+    case 9:
+        if(!Boost_bool){
+            slow_boost_value = "10";
+            fast_boost_value = "12";
+        }
+        break;
+    case 10:
+        if(!Boost_bool){
+            slow_boost_value = "11";
+            fast_boost_value = "13";
+        }
+        break;
+    case 11:
+        if(!Boost_bool){
+            slow_boost_value = "12";
+            fast_boost_value = "14";
+        }
+        break;
+    case 12:
+        if(!Boost_bool){
+            slow_boost_value = "13";
+            fast_boost_value = "15";
+        }
+        break;
+    case 13:
+        if(!Boost_bool){
+            slow_boost_value = "14";
+            fast_boost_value = "16";
+        }
+        break;
+    case 14:
+        if(!Boost_bool){
+            slow_boost_value = "15";
+            fast_boost_value = "18";
+        }
+        break;
+    case 15:
+        if(!Boost_bool){
+            slow_boost_value = "16";
+            fast_boost_value = "19";
+        }
+        break;
+    case 16:
+        if(!Boost_bool){
+            slow_boost_value = "17";
+            fast_boost_value = "20";
+        }
+        break;
+    case 17:
+        if(!Boost_bool){
+            slow_boost_value = "18";
+            fast_boost_value = "21";
+        }
+        break;
+    case 18:
+        if(!Boost_bool){
+            slow_boost_value = "19";
+            fast_boost_value = "22";
+        }
+        break;
+    case 19:
+        if(!Boost_bool){
+            slow_boost_value = "20000";
+            fast_boost_value = "23";
+        }
+        break;
+    case 20:
+        if(!Boost_bool){
+            slow_boost_value = "21";
+            fast_boost_value = "25";
+        }
+        break;
+    case 21:
+        if(!Boost_bool){
+            slow_boost_value = "22";
+            fast_boost_value = "26";
+        }
+        break;
+    case 22:
+        if(!Boost_bool){
+            slow_boost_value = "23";
+            fast_boost_value = "27";
+        }
+        break;
+    case 23:
+        if(!Boost_bool){
+            slow_boost_value = "24";
+            fast_boost_value = "28";
+        }
+        break;
+    case 24:
+        if(!Boost_bool){
+            slow_boost_value = "25";
+            fast_boost_value = "29";
+        }
+        break;
+    case 25:
+        if(!Boost_bool){
+            slow_boost_value = "26";
+            fast_boost_value = "30";
+        }
+        break;
+    case 26:
+        if(!Boost_bool){
+            slow_boost_value = "27";
+            fast_boost_value = "32";
+        }
+        break;
+    case 27:
+        if(!Boost_bool){
+            slow_boost_value = "28";
+            fast_boost_value = "33";
+        }
+        break;
+    case 28:
+        if(!Boost_bool){
+            slow_boost_value = "29";
+            fast_boost_value = "34";
+        }
+        break;
+    case 29:
+        if(!Boost_bool){
+            slow_boost_value = "30";
+            fast_boost_value = "35";
+        }
+        break;
+    case 30:
+        if(!Boost_bool){
+            slow_boost_value = "31";
+            fast_boost_value = "36";
+        }
+        break;
+    case 31:
+        if(!Boost_bool){
+            slow_boost_value = "32";
+            fast_boost_value = "38";
+        }
+        break;
+    case 32:
+        if(!Boost_bool){
+            slow_boost_value = "33";
+            fast_boost_value = "39";
+        }
+        break;
+    case 33:
+        if(!Boost_bool){
+            slow_boost_value = "34";
+            fast_boost_value = "40";
+        }
+        break;
+    case 34:
+        if(!Boost_bool){
+            slow_boost_value = "35";
+            fast_boost_value = "41";
+        }
+        break;
+    case 35:
+        if(!Boost_bool){
+            slow_boost_value = "36";
+            fast_boost_value = "42";
+        }
+        break;
+    case 36:
+        if(!Boost_bool){
+            slow_boost_value = "37";
+            fast_boost_value = "43";
+        }
+        break;
+    case 37:
+        if(!Boost_bool){
+            slow_boost_value = "38";
+            fast_boost_value = "44";
+        }
+        break;
+    case 38:
+        if(!Boost_bool){
+            slow_boost_value = "39";
+            fast_boost_value = "45";
+        }
+        break;
+    case 39:
+        if(!Boost_bool){
+            slow_boost_value = "40";
+            fast_boost_value = "47";
+        }
+        break;
+    case 40:
+        if(!Boost_bool){
+            slow_boost_value = "41";
+            fast_boost_value = "48";
+        }
+        break;
+    case 41:
+        if(!Boost_bool){
+            slow_boost_value = "42";
+            fast_boost_value = "49";
+        }
+        break;
+    case 42:
+        if(!Boost_bool){
+            slow_boost_value = "43";
+            fast_boost_value = "50";
+        }
+        break;
+    case 43:
+        if(!Boost_bool){
+            slow_boost_value = "44";
+            fast_boost_value = "51";
+        }
+        break;
+    case 44:
+        if(!Boost_bool){
+            slow_boost_value = "45";
+            fast_boost_value = "53";
+        }
+        break;
+    }
+    if(Boost_bool){
+        slow_boost_value = ui->slow_tdp_lineEdit->text();
+        fast_boost_value = ui->fast_tdp_lineEdit->text();
+        slow_boost_int = slow_boost_value.toInt(&ok);
+        slow_boost_str = to_string(slow_boost_int);
+        fast_boost_int = fast_boost_value.toInt(&ok);
+        fast_boost_str = to_string(fast_boost_int);
+    }else {
+        slow_boost_float = slow_boost_value.toFloat(&ok);
+        slow_boost_int = static_cast<int>(round(slow_boost_float));
+        slow_boost_value_display = QString::number(slow_boost_int);
+        fast_boost_float = fast_boost_value.toFloat(&ok);
+        fast_boost_int = static_cast<int>(round(fast_boost_float));
+        fast_boost_value_display = QString::number(fast_boost_int);
+        ui->slow_tdp_lineEdit->setText(slow_boost_value_display);
+        ui->fast_tdp_lineEdit->setText(fast_boost_value_display);
+        slow_boost_str = slow_boost_value.toStdString();
+        fast_boost_str = fast_boost_value.toStdString();
+    }
+    set_thermal_policy(tdp_value_int);
+    set_scaling_governor();
+    set_energy_performance_pref();
+    tdp_value_str = to_string(tdp_value_int);
+    Ryzen_tdp_command_str.clear();
+    Ryzen_tdp_command_str.append("echo ");
+    Ryzen_tdp_command_str.append(fast_boost_str);
+    Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_fppt");
+    Ryzen_tdp_command(Ryzen_tdp_command_str);
+    Ryzen_tdp_command_str.clear();
+    Ryzen_tdp_command_str.append("echo ");
+    Ryzen_tdp_command_str.append(slow_boost_str);
+    Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_pl2_sppt");
+    Ryzen_tdp_command(Ryzen_tdp_command_str);
+    Ryzen_tdp_command_str.clear();
+    Ryzen_tdp_command_str.append("echo ");
+    Ryzen_tdp_command_str.append(tdp_value_str);
+    Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_pl1_spl");
+    Ryzen_tdp_command(Ryzen_tdp_command_str);
+    tdp_value_str_sb = tdp_value_str;
+    fast_boost_str_sb = fast_boost_str;
+    slow_boost_str_sb = slow_boost_str;
 }
 
 void MainWindow::on_GPU_Apply_pushButton_clicked()
@@ -569,75 +569,61 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(slow_boost_str_sb);
         */
         // Use same method as secure boot disabled...
-        tdp_display_info.append("<hr align='left'>Sustained TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Sustained TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Fast TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Fast TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Slow TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Slow TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
         tdp_display_info.append("<p style='color:green;'>Secure Boot Enabled</p>");
-    }else {
-        tdp_display_info.append("<hr align='left'>Sustained TDP setting: ");
+        tdp_display_info.append("<p align='left'>Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Sustained TDP value: ");
+        tdp_display_info.append("<br>Sustained TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Fast TDP setting: ");
+        tdp_display_info.append("<br>Fast TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Fast TDP value: ");
+        tdp_display_info.append("<br>Fast TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Slow TDP setting: ");
+        tdp_display_info.append("<br>Slow TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
-        tdp_display_info.append("<hr align='left'><br>Slow TDP value: ");
+        tdp_display_info.append("<br>Slow TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("</hr>");
+        tdp_display_info.append("</p>");
+    }else {
         tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
-    }    
-    tdp_display_info.append("<hr align='left'><br>AMD Pstate status: ");
+        tdp_display_info.append("<p align='left'>Sustained TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("<br>Sustained TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("<br>Fast TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("<br>Fast TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("<br>Slow TDP setting: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("<br>Slow TDP value: ");
+        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
+        tdp_display_info.append("</p>");
+    }
+    tdp_display_info.append("<p align='left'>AMD Pstate status: ");
     tdp_info_disp_temp = Get_tdp_Info(amd_pstate_status);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("</hr>");
-    tdp_display_info.append("<hr align='left'><br>Scaling Driver: ");
+    tdp_display_info.append("<br>Scaling Driver: ");
     tdp_info_disp_temp = Get_tdp_Info(scaling_driver);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("</hr>");
-    tdp_display_info.append("<hr align='left'><br>Scaling Governor: ");
+    tdp_display_info.append("<br>Scaling Governor: ");
     tdp_info_disp_temp = Get_tdp_Info(scaling_governor);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("</hr>");
-    tdp_display_info.append("<hr align='left'><br>EPP setting in use: ");
+    tdp_display_info.append("<br>EPP setting in use: ");
     tdp_info_disp_temp = Get_tdp_Info(energy_performance_preference);
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("</hr>");
-    tdp_display_info.append("<hr align='left'><br>Thermal policy: ");
+    tdp_display_info.append("<br>Thermal policy: ");
     thermal_str = Get_tdp_Info(throttle_thermal_policy);
     if (!thermal_str.empty() && thermal_str.back() == '\n') {
         thermal_str.pop_back(); // Remove the last character
@@ -655,7 +641,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = "Unknown";
     }
     tdp_display_info.append(tdp_info_disp_temp);
-    tdp_display_info.append("</hr>");
+    tdp_display_info.append("</p>");
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
@@ -692,24 +678,24 @@ void MainWindow::readSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-        bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
-        bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
-        bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
+    bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
+    bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
+    bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
     settings.endGroup();
     settings.beginGroup("Values");
-        QString tempSlow = settings.value("slow_tdp").toString();
-        QString tempFast = settings.value("fast_tdp").toString();
-        QString tempGPU = settings.value("gpu_clock").toString();
-        QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
-        QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
-        QString tempTDP = settings.value("tdp_stored").toString();
-        QString tempFastBoost = settings.value("fast_boost_stored").toString();
-        QString tempSlowBoost = settings.value("slow_boost_stored").toString();
+    QString tempSlow = settings.value("slow_tdp").toString();
+    QString tempFast = settings.value("fast_tdp").toString();
+    QString tempGPU = settings.value("gpu_clock").toString();
+    QString tempTDP_Slider = settings.value("apu_tdp_slider").toString();
+    QString tempGPU_Slider = settings.value("gpu_clock_slider").toString();
+    QString tempTDP = settings.value("tdp_stored").toString();
+    QString tempFastBoost = settings.value("fast_boost_stored").toString();
+    QString tempSlowBoost = settings.value("slow_boost_stored").toString();
     settings.endGroup();
     settings.beginGroup("ComboBoxes");
-        int Governor_int = settings.value("Governor_ComboBox").toInt();
-        int EPP_int = settings.value("EPP_ComboBox").toInt();
-        int Mode_Change_int = settings.value("MCU_Mode_Change").toInt();
+    int Governor_int = settings.value("Governor_ComboBox").toInt();
+    int EPP_int = settings.value("EPP_ComboBox").toInt();
+    int Mode_Change_int = settings.value("MCU_Mode_Change").toInt();
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
@@ -732,24 +718,24 @@ void MainWindow::writeSettings()
 {
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
-        settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
-        settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
-        settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
+    settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
+    settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
+    settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
     settings.endGroup();
     settings.beginGroup("Values");
-        settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
-        settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
-        settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
-        settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
-        settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
-        settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
-        settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
-        settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
+    settings.setValue("slow_tdp", ui->slow_tdp_lineEdit->text());
+    settings.setValue("fast_tdp", ui->fast_tdp_lineEdit->text());
+    settings.setValue("gpu_clock", ui->GPU_Clock_Slider->value());
+    settings.setValue("apu_tdp_slider", ui->tdp_Slider->value());
+    settings.setValue("gpu_clock_slider", ui->GPU_Clock_Slider->value());
+    settings.setValue("tdp_stored", QString::fromStdString(tdp_value_str_sb));
+    settings.setValue("fast_boost_stored", QString::fromStdString(fast_boost_str_sb));
+    settings.setValue("slow_boost_stored", QString::fromStdString(slow_boost_str_sb));
     settings.endGroup();
     settings.beginGroup("ComboBoxes");
-        settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
-        settings.setValue("EPP_ComboBox", ui->EPP_comboBox->currentIndex());
-        settings.setValue("MCU_Mode_Change", ui->Mode_Change_comboBox->currentIndex());
+    settings.setValue("Governor_ComboBox", ui->Governor_comboBox->currentIndex());
+    settings.setValue("EPP_ComboBox", ui->EPP_comboBox->currentIndex());
+    settings.setValue("MCU_Mode_Change", ui->Mode_Change_comboBox->currentIndex());
     settings.endGroup();
 }
 
