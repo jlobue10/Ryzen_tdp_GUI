@@ -651,7 +651,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
 void MainWindow::on_exit_pushButton_clicked()
 {
     writeSettings();
-    MainWindow::~MainWindow();
+    delete ui;
 }
 
 string MainWindow::Get_tdp_Info(const char* tdp_type) {
