@@ -2,9 +2,9 @@
 #include "ui_mainwindow.h"
 #include <cmath>
 #include <cstring>
-#include <iostream>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QObject>
 #include <QPushButton>
 #include <QRegExp>
 #include <QRegExpValidator>
@@ -134,6 +134,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tdp_lineEdit->setValidator(tdp_int_validator);
     connect(ui->GPU_Clock_checkBox, &QCheckBox::stateChanged, this, &MainWindow::on_GPU_Clock_checkBox_stateChanged);
     connect(MCU_Mode_check_timer, &QTimer::timeout, this, &MainWindow::update_MCU_Mode_lineEdit);
+    // Connect the button's clicked signal to the MainWindow's close slot
+    connect(ui->exit_pushButton, &QPushButton::clicked, this, &MainWindow::close);
     ui->MCU_Mode_lineEdit->setReadOnly(true);
     update_MCU_Mode_lineEdit();
     user_home_path << "/home/" << tdp_USER;
@@ -646,12 +648,6 @@ void MainWindow::on_tdp_info_pushButton_clicked()
     tdp_info_Box.setText(tdp_info_QString);
     tdp_info_Box.setStandardButtons(QMessageBox::Ok);
     tdp_info_Box.exec();
-}
-
-void MainWindow::on_exit_pushButton_clicked()
-{
-    writeSettings();
-    delete ui;
 }
 
 string MainWindow::Get_tdp_Info(const char* tdp_type) {
