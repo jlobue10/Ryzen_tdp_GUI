@@ -46,8 +46,6 @@ private slots:
 
     void on_tdp_info_pushButton_clicked();
 
-    void on_exit_pushButton_clicked();
-
     void on_About_pushButton_clicked();
 
     void on_updateButton_Clicked();
