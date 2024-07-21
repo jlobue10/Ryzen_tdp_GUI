@@ -557,36 +557,19 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         /* Secure boot can work with ryzenadj, even with info
          * if kernel is compiled with CONFIG_SECURITY_LOCKDOWN_LSM_EARLY
          * disabled. Commenting out this portion as unnecessary for now
-         * as of Feb 2024. This worked for 6.8 kernels.
+         * as of Feb 2024. This worked for 6.8 kernels. This may no longer
+         * be sufficient with 6.10 kernels.
          */
-        /*
-        tdp_display_info.append("Sustained TDP setting: ");
-        tdp_display_info.append(tdp_value_str_sb);
-        tdp_display_info.append("\nFast TDP setting: ");
-        tdp_display_info.append(fast_boost_str_sb);
-        tdp_display_info.append("\nSlow TDP setting: ");
-        tdp_display_info.append(slow_boost_str_sb);
-        */
-        // Use same method as secure boot disabled...
         tdp_display_info.append("<p style='color:green;'>Secure Boot Enabled</p>");
         tdp_display_info.append("<p align='left'>Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_value_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        //tdp_display_info.append("<br>Sustained TDP value: ");
-        //tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
-        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Fast TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(fast_boost_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        //tdp_display_info.append("<br>Fast TDP value: ");
-        //tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
-        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Slow TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(slow_boost_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        //tdp_display_info.append("<br>Slow TDP value: ");
-        //tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
-        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</p>");
     }else {
         tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
