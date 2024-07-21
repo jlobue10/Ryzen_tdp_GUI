@@ -97,7 +97,6 @@ string GPU_mode_select_str;
 string GPU_SYSPATH_str;
 string gpu_clock_value_str;
 string slow_boost_str;
-string slow_boost_str_sb;
 string fast_boost_str;
 string MCU_Mode_str;
 string Ryzen_gpu_command_str;
