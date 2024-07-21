@@ -52,6 +52,9 @@ const char* energy_performance_preference = "cat /sys/devices/system/cpu/cpufreq
 const char* throttle_thermal_policy = "cat /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 const char* asusctl_check = "which asusctl | xargs -n 1 basename";
 const char* MCU_Mode_test = "cat /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.0001/gamepad_mode";
+const char* tdp_value_sb = "cat /sys/devices/platform/asus-nb-wmi/ppt_pl1_spl";
+const char* fast_boost_sb = "cat /sys/devices/platform/asus-nb-wmi/ppt_fppt";
+const char* slow_boost_sb = "cat /sys/devices/platform/asus-nb-wmi/ppt_pl2_sppt";
 string throttle_balanced = "echo 0 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_performance = "echo 1 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_quiet = "echo 2 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
@@ -96,7 +99,6 @@ string gpu_clock_value_str;
 string slow_boost_str;
 string slow_boost_str_sb;
 string fast_boost_str;
-string fast_boost_str_sb;
 string MCU_Mode_str;
 string Ryzen_gpu_command_str;
 string Ryzen_tdp_command_str;
@@ -106,7 +108,6 @@ string tdp_info_disp_temp;
 string tdp_info_str;
 string tdp_USER = getlogin();
 string tdp_value_str;
-string tdp_value_str_sb;
 string thermal_policy;
 string thermal_str;
 string Update_Num_str;
@@ -451,9 +452,6 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
     Ryzen_tdp_command_str.append(tdp_value_str);
     Ryzen_tdp_command_str.append(" | tee /sys/devices/platform/asus-nb-wmi/ppt_pl1_spl");
     Ryzen_tdp_command(Ryzen_tdp_command_str);
-    tdp_value_str_sb = tdp_value_str;
-    fast_boost_str_sb = fast_boost_str;
-    slow_boost_str_sb = slow_boost_str;
 }
 
 void MainWindow::on_GPU_Apply_pushButton_clicked()
@@ -560,7 +558,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         /* Secure boot can work with ryzenadj, even with info
          * if kernel is compiled with CONFIG_SECURITY_LOCKDOWN_LSM_EARLY
          * disabled. Commenting out this portion as unnecessary for now
-         * as of Feb 2024.
+         * as of Feb 2024. This worked for 6.8 kernels.
          */
         /*
         tdp_display_info.append("Sustained TDP setting: ");
@@ -573,23 +571,23 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         // Use same method as secure boot disabled...
         tdp_display_info.append("<p style='color:green;'>Secure Boot Enabled</p>");
         tdp_display_info.append("<p align='left'>Sustained TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
+        tdp_info_disp_temp = Get_tdp_Info(tdp_value_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("<br>Sustained TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
+        //tdp_display_info.append("<br>Sustained TDP value: ");
+        //tdp_info_disp_temp = Get_tdp_Info(tdp_value_search);
+        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Fast TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_lim_value_search);
+        tdp_info_disp_temp = Get_tdp_Info(fast_boost_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("<br>Fast TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
+        //tdp_display_info.append("<br>Fast TDP value: ");
+        //tdp_info_disp_temp = Get_tdp_Info(tdp_fast_value_search);
+        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Slow TDP setting: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_lim_value_search);
+        tdp_info_disp_temp = Get_tdp_Info(slow_boost_sb);
         tdp_display_info.append(tdp_info_disp_temp);
-        tdp_display_info.append("<br>Slow TDP value: ");
-        tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
+        //tdp_display_info.append("<br>Slow TDP value: ");
+        //tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        //tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</p>");
     }else {
         tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
