@@ -1,4 +1,6 @@
-ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/platform/asus-nb-wmi/{ppt_fppt,ppt_pl1_spl,ppt_pl2_sppt}'"
+ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/class/firmware-attributes/asus-armoury/attributes/ppt_fppt/current_value'"
+ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl2_sppt/current_value'"
+ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl1_spl/current_value'"
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy'"
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/policy*/scaling_governor'"
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference'"
