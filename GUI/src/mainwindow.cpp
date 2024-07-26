@@ -573,7 +573,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</p>");
         */
-        tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
+        tdp_display_info.append("<p style='color:green;'>Secure Boot Enabled</p>");
         tdp_display_info.append("<p align='left'>Sustained TDP setting: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_limit_value_search);
         tdp_display_info.append(tdp_info_disp_temp);
