@@ -606,6 +606,7 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Slow TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
+        tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</p>");
     }else {
         tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
