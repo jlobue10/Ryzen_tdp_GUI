@@ -36,6 +36,8 @@ private slots:
 
     void on_Boost_checkBox_toggled(bool checked);
 
+    void on_CPU_Boost_checkBox_toggled(bool checked);
+
     void on_tdp_lineEdit_editingFinished();
 
     void on_GPU_Clock_lineEdit_editingFinished();
