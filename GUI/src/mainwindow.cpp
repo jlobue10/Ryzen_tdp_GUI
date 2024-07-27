@@ -665,11 +665,11 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         CPU_Boost_str.pop_back(); // Remove the last character
     }
     if(CPU_Boost_str == "1"){
-        tdp_display_info.append("<br>Enabled");
+        tdp_display_info.append("Enabled");
     }
     else
     {
-        tdp_display_info.append("<br>Disabled");
+        tdp_display_info.append("Disabled");
     }
     tdp_display_info.append("</p>");
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
