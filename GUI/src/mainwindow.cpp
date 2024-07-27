@@ -26,6 +26,7 @@ bool ok;
 bool Smoke_bool;
 bool Boost_bool;
 bool GPU_Clock_bool;
+bool CPU_Boost_bool;
 float fast_boost_float;
 float slow_boost_float;
 int Find_MCU_Mode_test_res;
@@ -55,6 +56,7 @@ const char* MCU_Mode_test = "cat /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.000
 const char* tdp_value_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl1_spl/current_value";
 const char* fast_boost_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_fppt/current_value";
 const char* slow_boost_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl2_sppt/current_value";
+const char* CPU_Boost_status = "cat /sys/devices/system/cpu/cpufreq/policy0/boost";
 string throttle_balanced = "echo 0 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_performance = "echo 1 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_quiet = "echo 2 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
@@ -91,6 +93,7 @@ QString Ryzen_tdp_debug_out;
 QString Scaling_Governor;
 QString EPP_setting;
 string asusctl_check_res;
+string CPU_Boost_str;
 string GPU_auto_mode = "echo \"auto\" > \"";
 string GPU_manual_mode = "echo \"manual\" > \"";
 string GPU_mode_select_str;
@@ -526,6 +529,18 @@ void MainWindow::on_Boost_checkBox_toggled(bool checked)
     }
 }
 
+void MainWindow::on_CPU_Boost_checkBox_toggled(bool checked)
+{
+    Ryzen_tdp_command_str.clear();
+    CPU_Boost_bool = ui->CPU_Boost_checkBox->isChecked();
+    if(CPU_Boost_bool){
+        Ryzen_tdp_command_str.append("echo 1 | /sys/devices/system/cpu/cpufreq/policy0/boost");
+    }else {
+        Ryzen_tdp_command_str.append("echo 0 | /sys/devices/system/cpu/cpufreq/policy0/boost");
+    }
+    Ryzen_tdp_command(Ryzen_tdp_command_str);
+}
+
 void MainWindow::on_tdp_lineEdit_editingFinished()
 {
     if (ui->tdp_lineEdit->hasAcceptableInput()) {
@@ -591,7 +606,6 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("<br>Slow TDP value: ");
         tdp_info_disp_temp = Get_tdp_Info(tdp_slow_value_search);
-        tdp_display_info.append(tdp_info_disp_temp);
         tdp_display_info.append("</p>");
     }else {
         tdp_display_info.append("<p style='color:red;'>Secure Boot Disabled</p>");
@@ -645,6 +659,18 @@ void MainWindow::on_tdp_info_pushButton_clicked()
         tdp_info_disp_temp = "Unknown";
     }
     tdp_display_info.append(tdp_info_disp_temp);
+    CPU_Boost_str = Get_tdp_Info(CPU_Boost_status);
+    tdp_display_info.append("<br>CPU Boost ");
+    if (!CPU_Boost_str.empty() && CPU_Boost_str.back() == '\n') {
+        CPU_Boost_str.pop_back(); // Remove the last character
+    }
+    if(CPU_Boost_str == "1"){
+        tdp_display_info.append("<br>Enabled");
+    }
+    else
+    {
+        tdp_display_info.append("<br>Disabled");
+    }
     tdp_display_info.append("</p>");
     QString tdp_info_QString = QString::fromStdString(tdp_display_info);
     tdp_info_Box.setText(tdp_info_QString);
@@ -677,6 +703,7 @@ void MainWindow::readSettings()
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
     bool temp_Boost_bool = settings.value("Boost_checkBox").toBool();
+    bool temp_CPU_Boost_bool = settings.value("CPU_Boost_checkBox").toBool();
     bool temp_GPU_Clock_bool = settings.value("GPU_Clock_checkBox").toBool();
     bool temp_Smoke_bool = settings.value("Smoke_checkBox").toBool();
     settings.endGroup();
@@ -693,6 +720,7 @@ void MainWindow::readSettings()
     settings.endGroup();
     ui->Smoke_checkBox->setChecked(temp_Smoke_bool);
     ui->Boost_checkBox->setChecked(temp_Boost_bool);
+    ui->CPU_Boost_checkBox->setChecked(temp_CPU_Boost_bool);
     ui->GPU_Clock_checkBox->setChecked(temp_GPU_Clock_bool);
     ui->slow_tdp_lineEdit->setText(tempSlow);
     ui->fast_tdp_lineEdit->setText(tempFast);
@@ -710,6 +738,7 @@ void MainWindow::writeSettings()
     QSettings settings(settings_path, QSettings::NativeFormat);
     settings.beginGroup("CheckBoxes");
     settings.setValue("Boost_checkBox", ui->Boost_checkBox->isChecked());
+    settings.setValue("CPU_Boost_checkBox", ui->CPU_Boost_checkBox->isChecked());
     settings.setValue("GPU_Clock_checkBox", ui->GPU_Clock_checkBox->isChecked());
     settings.setValue("Smoke_checkBox", ui->Smoke_checkBox->isChecked());
     settings.endGroup();
