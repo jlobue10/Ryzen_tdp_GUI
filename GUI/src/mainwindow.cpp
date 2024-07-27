@@ -534,9 +534,9 @@ void MainWindow::on_CPU_Boost_checkBox_toggled(bool checked)
     Ryzen_tdp_command_str.clear();
     CPU_Boost_bool = ui->CPU_Boost_checkBox->isChecked();
     if(CPU_Boost_bool){
-        Ryzen_tdp_command_str.append("echo 1 | /sys/devices/system/cpu/cpufreq/policy0/boost");
+        Ryzen_tdp_command_str.append("echo 1 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
     }else {
-        Ryzen_tdp_command_str.append("echo 0 | /sys/devices/system/cpu/cpufreq/policy0/boost");
+        Ryzen_tdp_command_str.append("echo 0 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
     }
     Ryzen_tdp_command(Ryzen_tdp_command_str);
 }
