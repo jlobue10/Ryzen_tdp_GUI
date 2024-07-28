@@ -22,6 +22,7 @@ public:
    void set_thermal_policy(int thermal_policy_int);
    void set_scaling_governor();
    void set_energy_performance_pref();
+   void set_cpu_boost();
 
 private slots:
     void on_tdp_Slider_valueChanged(int value);
