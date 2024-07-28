@@ -438,6 +438,7 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
     set_thermal_policy(tdp_value_int);
     set_scaling_governor();
     set_energy_performance_pref();
+    set_cpu_boost();
     tdp_value_str = to_string(tdp_value_int);
     Ryzen_tdp_command_str.clear();
     Ryzen_tdp_command_str.append("echo ");
@@ -531,14 +532,7 @@ void MainWindow::on_Boost_checkBox_toggled(bool checked)
 
 void MainWindow::on_CPU_Boost_checkBox_toggled(bool checked)
 {
-    Ryzen_tdp_command_str.clear();
-    CPU_Boost_bool = ui->CPU_Boost_checkBox->isChecked();
-    if(CPU_Boost_bool){
-        Ryzen_tdp_command_str.append("echo 1 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
-    }else {
-        Ryzen_tdp_command_str.append("echo 0 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
-    }
-    Ryzen_tdp_command(Ryzen_tdp_command_str);
+    set_cpu_boost();
 }
 
 void MainWindow::on_tdp_lineEdit_editingFinished()
@@ -897,6 +891,18 @@ void MainWindow::set_thermal_policy(int thermal_policy_int)
             Ryzen_tdp_command(throttle_performance);
         }
     }
+}
+
+void MainWindow::set_cpu_boost()
+{
+    Ryzen_tdp_command_str.clear();
+    CPU_Boost_bool = ui->CPU_Boost_checkBox->isChecked();
+    if(CPU_Boost_bool){
+        Ryzen_tdp_command_str.append("echo 1 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
+    }else {
+        Ryzen_tdp_command_str.append("echo 0 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
+    }
+    Ryzen_tdp_command(Ryzen_tdp_command_str);
 }
 
 void MainWindow::set_scaling_governor()
