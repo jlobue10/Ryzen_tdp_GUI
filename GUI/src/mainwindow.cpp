@@ -36,6 +36,7 @@ int fast_boost_int;
 int tdp_value_int;
 int Update_Num;
 int VERSION = 130;
+const char* ALLY_type_checker_cmd = "cat /sys/devices/virtual/dmi/id/board_name";
 const char* tdp_limit_value_search = "sudo ryzenadj --info | grep -e 'STAPM LIMIT' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_value_search = "sudo ryzenadj --info | grep -e 'STAPM VALUE' | grep -Eo '[0-9]+([.][0-9]+)?'";
 const char* tdp_fast_lim_value_search = "sudo ryzenadj --info | grep -e 'PPT LIMIT FAST' | grep -Eo '[0-9]+([.][0-9]+)?'";
