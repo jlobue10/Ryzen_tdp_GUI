@@ -4,4 +4,4 @@ ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/class/firmware-attributes/asus-
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy'"
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/policy*/scaling_governor'"
 ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference'"
-ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/policy0/boost'"
+ACTION=="add", RUN+="/bin/sh -c 'chmod 0666 /sys/devices/system/cpu/cpufreq/boost'"
