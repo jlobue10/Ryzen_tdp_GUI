@@ -57,7 +57,7 @@ const char* MCU_Mode_test = "cat /sys/bus/usb/devices/1-3:1.0/0003:0B05:1ABE.000
 const char* tdp_value_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl1_spl/current_value";
 const char* fast_boost_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_fppt/current_value";
 const char* slow_boost_sb = "cat /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl2_sppt/current_value";
-const char* CPU_Boost_status = "cat /sys/devices/system/cpu/cpufreq/policy0/boost";
+const char* CPU_Boost_status = "cat /sys/devices/system/cpu/cpufreq/boost";
 string throttle_balanced = "echo 0 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_performance = "echo 1 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
 string throttle_quiet = "echo 2 | tee /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy";
@@ -899,9 +899,9 @@ void MainWindow::set_cpu_boost()
     Ryzen_tdp_command_str.clear();
     CPU_Boost_bool = ui->CPU_Boost_checkBox->isChecked();
     if(CPU_Boost_bool){
-        Ryzen_tdp_command_str.append("echo 1 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
+        Ryzen_tdp_command_str.append("echo 1 | tee /sys/devices/system/cpu/cpufreq/boost");
     }else {
-        Ryzen_tdp_command_str.append("echo 0 | tee /sys/devices/system/cpu/cpufreq/policy0/boost");
+        Ryzen_tdp_command_str.append("echo 0 | tee /sys/devices/system/cpu/cpufreq/boost");
     }
     Ryzen_tdp_command(Ryzen_tdp_command_str);
 }
