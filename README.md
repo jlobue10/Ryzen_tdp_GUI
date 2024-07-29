@@ -1,5 +1,5 @@
 # Ryzen_tdp
-Ryzen tdp GUI  (ROG ALLY)
+Ryzen tdp GUI  (ROG ALLY and ROG ALLY X)
 
 ## Pre-requisites
 
