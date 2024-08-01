@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>580</width>
-    <height>310</height>
+    <height>340</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>580</width>
-    <height>310</height>
+    <height>340</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>580</width>
-    <height>310</height>
+    <height>340</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,10 +29,10 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>14</x>
-      <y>14</y>
+      <x>10</x>
+      <y>10</y>
       <width>561</width>
-      <height>284</height>
+      <height>322</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -224,7 +224,7 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0" colspan="3">
+     <item row="2" column="0" colspan="2">
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item alignment="Qt::AlignmentFlag::AlignRight">
         <widget class="QLabel" name="Mode_Change_label">
@@ -304,67 +304,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="4">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QSlider" name="tdp_Slider">
-         <property name="minimum">
-          <number>5</number>
-         </property>
-         <property name="maximum">
-          <number>30</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>30</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TickPosition::NoTicks</enum>
-         </property>
-         <property name="tickInterval">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="tdp_lineEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>TDP value</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="tdp_label">
-         <property name="text">
-          <string>Watts</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="3" column="4" rowspan="4">
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
@@ -442,7 +381,7 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0" colspan="4">
+     <item row="4" column="0" colspan="3">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
         <widget class="QCheckBox" name="GPU_Clock_checkBox">
@@ -477,6 +416,9 @@
        <property name="text">
         <string>GPU Clock Manual Setting</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item row="5" column="3">
@@ -491,6 +433,280 @@
         <string>About</string>
        </property>
       </widget>
+     </item>
+     <item row="7" column="0" colspan="5">
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="Governor_label">
+         <property name="toolTip">
+          <string>Scaling Governor</string>
+         </property>
+         <property name="text">
+          <string>Scaling Governor:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="Governor_comboBox">
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Scaling Governor</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>powersave</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>performance</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="EPP_label">
+         <property name="toolTip">
+          <string>Energy Performance Preference</string>
+         </property>
+         <property name="text">
+          <string>Energy Pref:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="EPP_comboBox">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Energy Performance Preference</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>balance_performance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>balance_power</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>performance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>power</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="8" column="0" colspan="5">
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item>
+        <widget class="QCheckBox" name="Proc_Scheduler_checkBox">
+         <property name="toolTip">
+          <string>Process Scheduler</string>
+         </property>
+         <property name="text">
+          <string>Scheduler:</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="Proc_Scheduler_comboBox">
+         <property name="maximumSize">
+          <size>
+           <width>120</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Process Scheduler</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>bpfland</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>central</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>lavd</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>layered</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>nest</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>qmap</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>rlfifo</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>rustland</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>rusty</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>simple</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="APU_tdp_label_3">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>ASUS ROG ALLY MCU Mode</string>
+         </property>
+         <property name="text">
+          <string>Options:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="Proc_Sched_Options_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>217</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>ASUS ROG ALLY MCU Mode</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0" colspan="4">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QSlider" name="tdp_Slider">
+         <property name="minimum">
+          <number>5</number>
+         </property>
+         <property name="maximum">
+          <number>30</number>
+         </property>
+         <property name="pageStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>30</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TickPosition::NoTicks</enum>
+         </property>
+         <property name="tickInterval">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="tdp_lineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>TDP value</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="tdp_label">
+         <property name="text">
+          <string>Watts</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="6" column="0" colspan="4">
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -552,77 +768,6 @@
          <property name="text">
           <string>MHz</string>
          </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="7" column="0" colspan="5">
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <item>
-        <widget class="QLabel" name="Governor_label">
-         <property name="toolTip">
-          <string>Scaling Governor</string>
-         </property>
-         <property name="text">
-          <string>Scaling Governor:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="Governor_comboBox">
-         <property name="toolTip">
-          <string>Scaling Governor</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>powersave</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>performance</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="EPP_label">
-         <property name="toolTip">
-          <string>Energy Performance Preference</string>
-         </property>
-         <property name="text">
-          <string>Energy Pref:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="EPP_comboBox">
-         <property name="toolTip">
-          <string>Energy Performance Preference</string>
-         </property>
-         <item>
-          <property name="text">
-           <string>balance_performance</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>balance_power</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>performance</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>power</string>
-          </property>
-         </item>
         </widget>
        </item>
       </layout>
