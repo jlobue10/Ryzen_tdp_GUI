@@ -456,6 +456,7 @@ void MainWindow::on_tdp_Apply_pushButton_clicked()
     Ryzen_tdp_command_str.append(tdp_value_str);
     Ryzen_tdp_command_str.append(" | tee /sys/class/firmware-attributes/asus-armoury/attributes/ppt_pl1_spl/current_value");
     Ryzen_tdp_command(Ryzen_tdp_command_str);
+    on_GPU_Apply_pushButton_clicked();
 }
 
 void MainWindow::on_GPU_Apply_pushButton_clicked()
